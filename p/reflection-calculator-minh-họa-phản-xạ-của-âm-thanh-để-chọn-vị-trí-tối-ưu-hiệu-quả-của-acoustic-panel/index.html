@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Sau đây là dự án phần mềm mô phỏng lại đường đi của âm thanh trong căn phòng và các lý thuyết liên quan'><title>Reflection Calculator: Minh họa phản xạ của âm thanh để chọn vị trí tối ưu hiệu quả của Acoustic Panel</title>
+
+<link rel='canonical' href='https://kpnn0100.github.io/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Reflection Calculator: Minh họa phản xạ của âm thanh để chọn vị trí tối ưu hiệu quả của Acoustic Panel'>
+<meta property='og:description' content='Sau đây là dự án phần mềm mô phỏng lại đường đi của âm thanh trong căn phòng và các lý thuyết liên quan'>
+<meta property='og:url' content='https://kpnn0100.github.io/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/'>
+<meta property='og:site_name' content='kpnn | Sound Engineering'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C#' /><meta property='article:tag' content='Sound Engineering' /><meta property='article:tag' content='kpnn' /><meta property='article:published_time' content='2022-08-03T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-08-03T00:00:00&#43;00:00'/><meta property='og:image' content='https://kpnn0100.github.io/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/Reflection%20Calculator.png' />
+<meta name="twitter:title" content="Reflection Calculator: Minh họa phản xạ của âm thanh để chọn vị trí tối ưu hiệu quả của Acoustic Panel">
+<meta name="twitter:description" content="Sau đây là dự án phần mềm mô phỏng lại đường đi của âm thanh trong căn phòng và các lý thuyết liên quan"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kpnn0100.github.io/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/Reflection%20Calculator.png' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            localStorage.setItem(colorSchemeKey, "dark");
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5f32ea0e707ad4dc12c9398ce31b642e_65895_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">kpnn | Sound Engineering</a></h1>
+            <h2 class="site-description">Ở đây sẽ có tất tần tật những dự án về âm thanh của tui aka kpnn</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/kpnn0100'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/kpnn/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>kpnn</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Lưu trữ</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Tìm kiếm</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/">
+                <img src="/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/Reflection%20Calculator_huc2a54fb3e5c964fd44800c7ed552f5ec_384959_800x0_resize_box_3.png"
+                        srcset="/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/Reflection%20Calculator_huc2a54fb3e5c964fd44800c7ed552f5ec_384959_800x0_resize_box_3.png 800w, /p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/Reflection%20Calculator_huc2a54fb3e5c964fd44800c7ed552f5ec_384959_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="265" 
+                        loading="lazy"
+                        alt="Featured image of post Reflection Calculator: Minh họa phản xạ của âm thanh để chọn vị trí tối ưu hiệu quả của Acoustic Panel" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/audio-engineering/" >
+                Audio Engineering
+            </a>
+        
+            <a href="/categories/software/" >
+                Software
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/">Reflection Calculator: Minh họa phản xạ của âm thanh để chọn vị trí tối ưu hiệu quả của Acoustic Panel</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Sau đây là dự án phần mềm mô phỏng lại đường đi của âm thanh trong căn phòng và các lý thuyết liên quan
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 03, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    11 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<h2 id="a-các-lí-thuyết-về-phản-xạ-âm-thanh">A. Các lí thuyết về phản xạ âm thanh</h2>
+<h3 id="i-phản-xạ-của-âm-thanh-là-gì">I. Phản xạ của âm thanh là gì?</h3>
+<p>Khi âm thanh tiếp xúc một bề mặt bất kì, một phần của nó sẽ được hấp thụ bởi bề mặt vật liệu nó tiếp xúc phần còn lại sẽ được phản xạ trở lại với góc tới bằng góc phản xạ:</p>
+<img src='reflectdemo.png'/>
+<h3 id="ii-phản-xạ-này-ảnh-hưởng-như-thế-nào-đến-sự-tinh-khiết-của-nguồn-âm">II. Phản xạ này ảnh hưởng như thế nào đến sự “tinh khiết” của nguồn âm?</h3>
+<p>Một số căn phòng cần âm thanh đi từ nguồn âm như (loa, giọng nói,…) đến với tai người một cách chính xác và đầy đủ nhất chẳng hạn như phòng biểu diễn âm nhạc, các studio âm thanh. Chúng ta sẽ muốn hạn chế các vấn đề làm cho âm thanh sai lệch, vấn đề dễ thấy nhất đó chính là phản xạ âm thanh.</p>
+<p>Khi một nguồn âm thanh phát ra tiếng động, 1 luồng âm trực tiếp sẽ đi đến tai người nghe, cùng với đó có những luồng âm thanh phụ sẽ đập vào các vật liệu, các bức tường rồi mới đến tai người nghe. Điều này tạo ra một vấn đề làm cho âm thanh ko còn tinh khiết.</p>
+<img src='reflectinreal.png'/>
+<p>Các âm thanh phản xạ sẽ có biên độ, màu sắc cũng như thời gian đến tai người nghe khác với âm thanh trực tiếp khiến cho âm thanh gốc ko còn giữ được thông tin gốc ban đầu.</p>
+<h3 id="iii-hạn-chế-phản-xạ-âm-thanh">III. Hạn chế phản xạ âm thanh</h3>
+<p>Có 2 cách để hạn chế những âm thanh phản xạ:</p>
+<h4 id="1dùng-tiêu-âm">1.	Dùng tiêu âm</h4>
+<p>Tiêu âm sẽ làm cho biên độ dao động của âm thanh phản xạ giảm xuống khiến cho tỉ lệ giữa âm thanh phản xạ và âm thanh trực tiếp giảm đi nghĩa là giảm sự sai lệch về cách tiếp nhận của người nghe đối với nguồn âm gốc.</p>
+<h4 id="2dùng-tán-âm">2.	Dùng tán âm</h4>
+<p>Tán âm sẽ làm âm thanh được dàn đều ra nhiều phía với biên độ dàn đều không tập trung ở một hướng. Dùng tán âm sẽ làm cho các âm thanh phản xạ mờ đi chứ ko chuyển hóa âm thanh thành nhiệt như dùng tiêu âm, điều này vẫn sẽ khiến cho âm thanh gốc sai lệch đi đôi chút nhưng sẽ mềm mịn hơn so với việc phản xạ ko qua xử lí.</p>
+<img src='dif.png'/>
+<p>Tất nhiên chúng ta sẽ không muốn tiêu âm hoàn toàn, để lại một căn phòng “chết” (không có sự phản xạ âm) nhưng lắp đặt tiêu âm ở vị trí nào sẽ là một bài toán khó khăn nếu mình ko thể biết đường đi của âm thanh.</p>
+<p>Vậy ta phải chọn vị trí lắp tiêu âm như thế nào?</p>
+<h3 id="iv-phương-pháp-chọn-vị-trí-để-tiêu-âm-cơ-bản">IV. Phương pháp chọn vị trí để tiêu âm cơ bản</h3>
+<p>Trước khi đến với chọn vị trí cần tiêu âm, ta phải xác định, âm thanh nào cần tiêu âm và âm thanh nào có thể bỏ qua.</p>
+<p>Công thức cường độ âm:
+$$
+I = \frac{P} {4 \pi R^2 }
+$$</p>
+<p>Trong đó:</p>
+<p>P: công suất của nguồn âm;
+R: Khoảng cách từ điểm đang xét tời nguồn âm;</p>
+<p>Mẫu số của công thức bên vế phải: Diện tích của hình cầu (Khi âm thanh phát ra thì tất cả mọi điểm bao quanh nguồn âm tạo thành bề mặt của hình cầu)</p>
+<p>Theo công thức trên, ta biết được cường độ âm tỉ lệ nghịch với bình phương khoảng cách từ nguồn âm đến vị trí nghe.</p>
+<img src='first.png'/>
+<p>Vậy âm thanh to nhất đối với người nghe chính là âm thanh trực tiếp, âm thanh to thứ nhì là âm thanh của phản xạ đầu (phản xạ chỉ qua 1 bức tường) và tiếp đến là phản xạ 2,3,4…</p>
+<p>Chúng ta có thể dễ dàng tính phản xạ đầu bằng cách giải hình học cơ bản, nhưng với phản xạ 2,3,4 rất khó để tính.</p>
+<p>Vì vậy các phương pháp chọn vị trí tiêu âm cơ bản sẽ đánh mạnh vào phản xạ đầu.</p>
+<img src='cal.png'/>
+<h3 id="v-những-bất-cập-của-phương-pháp-chỉ-tiêu-âm-phản-xạ-đầu">V. Những bất cập của phương pháp chỉ tiêu âm phản xạ đầu</h3>
+<p>Các phản xạ 2 và 3 đương nhiên là sẽ có biên độ nhỏ hơn phản xạ đầu nhưng chúng ta chưa khảo sát đến sự chồng chập của nhiều phản xạ.</p>
+<p>Sẽ có trường hợp, nhiều phản xạ 2,3 trở đi cùng có nguồn gốc là một vùng tường nhỏ.</p>
+<p>Hoặc chúng ta đã xử lý hết các phản xạ đầu, lúc này vẫn chưa đạt được hiệu quả mong muốn thì chúng ta sẽ phải xử lý tiếp những phản xạ tiếp theo.</p>
+<h2 id="b-reflection-calculator">B. Reflection Calculator</h2>
+<h3 id="i-tổng-quan-dự-án">I. Tổng quan dự án</h3>
+<p>Reflection Calculator là một phần mềm minh họa/mô phỏng đường đi của âm thanh trong một căn phòng.</p>
+<h3 id="ii-ý-tưởng-ban-đầu">II. Ý tưởng ban đầu</h3>
+<p>Chúng ta dễ dàng tính được vị trí xảy ra phản xạ đầu nhưng
+rất khó để có tính toán được chính xác điểm nào xảy ra phản xạ 2,3 và hơn thế nữa.</p>
+<p>Vì vậy mình đã có một ý tưởng về việc, giả sử nguồn phát phát đi rất nhiều tia âm thanh, mình sẽ truy vết các tia đó để xem tia nào chạm tới vị trí nghe thì mình sẽ đánh dấu tia đó lại và truy ngược về nơi xảy ra phản xạ đầu tiên của nó, đó là nơi mà mình sẽ tiến hành xử lý tiêu âm</p>
+<h3 id="iii-khởi-tạo">III. Khởi tạo</h3>
+<p>Trước khi đến với thuật toán chi tiết thì chúng ta hãy điểm qua những tham số quan trọng ảnh hưởng đến sự minh họa của âm thanh cũng như các yếu tố khác.</p>
+<p>Đầu tiên chính là kích thước phòng: kích thước phòng ảnh hưởng rất nhiều đến hành vi của âm thanh, một căn phòng rộng lớn sẽ có những phản xạ đầu đến rất lâu và biên độ nhỏ hơn nhiều vì quãng được nó đã di chuyển.</p>
+<p>Thứ hai chính là vị trí đặt nguồn âm: mỗi vị trí đặt nguồn âm sẽ cho ra các &ldquo;tia&rdquo; âm thanh khác nhau.</p>
+<p>Tiếp đó là vị trí nghe: tương tự như vị trí nguồn âm, vị trí nghe khác nhau sẽ đón nhận những âm thanh khác nhau. Ví dụ khi ta ngồi sát tường, âm thanh phản xạ sẽ khác khi chúng ta ngồi giữa phòng.</p>
+<p>Và vì phần mềm này sẽ hoạt động dựa trên việc tạo ra các tia âm thanh nên số lượng tia sẽ ảnh hưởng rất lớn đến độ chính xác. Ít tia thì độ chính xác thấp nhưng hiệu năng cao, nhiều tia thì ngược lại.</p>
+<p>Cuối cùng là hệ số hấp thụ của vật liệu: một bức tường sẽ luôn hấp thụ dao động và chuyển hóa thành nhiệt năng nên khi phản xạ một phần âm thanh đã bị tiêu hao đi, đây là một yếu tố cần phải xem xét trước khi  đến với tính toán các điểm phản xạ đầu.</p>
+<img src='demoapp.png'/>
+<h3 id="iv-thuật-toán">IV. Thuật toán</h3>
+<p>Chúng ta sẽ chia nguồn âm thành [n] tia, mỗi tia lệch nhau 1 góc 2pi/n rad.</p>
+<p>Sau đó chúng ta sẽ vẽ đường đi của các tia, mỗi khi chúng tiếp xúc với bề mặt tường chúng ta sẽ cho tia đó phản xạ lại và tiếp tục cho nó di chuyển tiếp cho đến khi độ lớn của âm thanh tiệm cận về mức có thể bỏ qua hoặc tia âm thanh đó đã chạm tới tai người nghe.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">double</span> <span class="n">remain</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">Vector</span> <span class="n">vecto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">Cos</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">dochia</span><span class="o">+</span><span class="n">offset</span><span class="p">),</span> <span class="n">Math</span><span class="p">.</span><span class="n">Sin</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">dochia</span><span class="o">+</span><span class="n">offset</span><span class="p">));</span>
+        <span class="n">Point</span> <span class="n">start</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">);</span>
+        <span class="n">Point</span> <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">/</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">;</span>
+        <span class="kt">double</span> <span class="n">t2</span> <span class="o">=</span> <span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">/</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">;</span>
+        <span class="kt">double</span> <span class="n">t3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">/</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">;</span>
+        <span class="kt">double</span> <span class="n">t4</span> <span class="o">=</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">/</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">t1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t1</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t1</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">width</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">((</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t1</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span> <span class="o">=</span> <span class="o">-</span><span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">;</span>
+
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">t2</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t2</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t2</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">width</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">((</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t2</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">),</span> <span class="n">length</span><span class="p">);</span>
+            <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span> <span class="o">=</span> <span class="o">-</span><span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">t3</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t3</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t3</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t3</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">));</span>
+            <span class="n">vecto</span><span class="p">.</span><span class="n">X</span> <span class="o">=</span> <span class="o">-</span><span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">t4</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t4</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t4</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t4</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">));</span>
+            <span class="n">vecto</span><span class="p">.</span><span class="n">X</span> <span class="o">=</span> <span class="o">-</span><span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">all</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">linedrawoffset</span><span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">start</span><span class="p">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">end</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">end</span><span class="p">.</span><span class="n">Y</span><span class="p">,</span><span class="n">remain</span><span class="p">);</span>
+        <span class="n">Point</span> <span class="n">cirpos</span> <span class="o">=</span> <span class="n">end</span><span class="p">;</span>
+        <span class="n">mainregion</span><span class="p">.</span><span class="n">Children</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">all</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">remain</span> <span class="o">&gt;</span> <span class="n">minremain</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+            <span class="n">remain</span> <span class="o">=</span> <span class="n">remain</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">absort</span><span class="p">));</span>                   
+            <span class="n">start</span> <span class="o">=</span> <span class="n">end</span><span class="p">;</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">/</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">;</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">/</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">;</span>
+            <span class="n">t3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">/</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">;</span>
+            <span class="n">t4</span> <span class="o">=</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">start</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">/</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">;</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">t1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t1</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t1</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">width</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">((</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t1</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+
+                <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span> <span class="o">=</span> <span class="o">-</span><span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">;</span>
+
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">t2</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t2</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t2</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">width</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">((</span><span class="n">start</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">t2</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">),</span> <span class="n">length</span><span class="p">);</span>
+                <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span> <span class="o">=</span> <span class="o">-</span><span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">t3</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t3</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t3</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t3</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">));</span>
+                <span class="n">vecto</span><span class="p">.</span><span class="n">X</span> <span class="o">=</span> <span class="o">-</span><span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">t4</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t4</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t4</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">t4</span> <span class="o">*</span> <span class="n">vecto</span><span class="p">.</span><span class="n">Y</span><span class="p">));</span>
+
+                <span class="n">vecto</span><span class="p">.</span><span class="n">X</span> <span class="o">=</span> <span class="o">-</span><span class="n">vecto</span><span class="p">.</span><span class="n">X</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">all</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">linedrawoffset</span><span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">start</span><span class="p">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">end</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">end</span><span class="p">.</span><span class="n">Y</span><span class="p">,</span><span class="n">remain</span><span class="p">);</span>
+            <span class="n">mainregion</span><span class="p">.</span><span class="n">Children</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">all</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]);</span> 
+            
+        <span class="p">}</span>
+        <span class="kt">int</span> <span class="n">re</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+        <span class="kt">double</span> <span class="n">mul</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">bool</span> <span class="n">IsStack</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="kt">double</span> <span class="n">finalabsort</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="kt">double</span> <span class="n">FarFromMic</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">Line</span> <span class="n">tam1</span> <span class="o">=</span> <span class="n">all</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">];</span>
+        <span class="n">mul</span> <span class="o">+=</span> <span class="n">Distance2Point</span><span class="p">(</span><span class="n">tam1</span><span class="p">.</span><span class="n">X1</span><span class="p">,</span> <span class="n">tam1</span><span class="p">.</span><span class="n">Y1</span><span class="p">,</span> <span class="n">tam1</span><span class="p">.</span><span class="n">X2</span><span class="p">,</span> <span class="n">tam1</span><span class="p">.</span><span class="n">Y2</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">back</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">back</span> <span class="o">&lt;</span><span class="n">re</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span> <span class="n">back</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Line</span> <span class="n">tam</span> <span class="o">=</span> <span class="n">all</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">back</span><span class="p">];</span>
+            <span class="n">finalabsort</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">absort</span><span class="p">);</span>
+            <span class="kt">double</span> <span class="n">closedistance</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">mx</span><span class="p">,</span> <span class="n">my</span><span class="p">,</span> <span class="n">tam</span><span class="p">.</span><span class="n">X2</span> <span class="o">-</span> <span class="n">tam</span><span class="p">.</span><span class="n">X1</span><span class="p">,</span> <span class="n">tam</span><span class="p">.</span><span class="n">Y2</span> <span class="o">-</span> <span class="n">tam</span><span class="p">.</span><span class="n">Y1</span><span class="p">,</span> <span class="n">tam</span><span class="p">.</span><span class="n">X1</span><span class="p">,</span> <span class="n">tam</span><span class="p">.</span><span class="n">Y1</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">closedistance</span> <span class="o">&lt;</span> <span class="n">mindistance</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">IsStack</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="n">mul</span> <span class="o">=</span> <span class="n">mul</span> <span class="o">+</span> <span class="n">Distance2Point</span><span class="p">(</span><span class="n">tam</span><span class="p">.</span><span class="n">X1</span><span class="p">,</span> <span class="n">tam</span><span class="p">.</span><span class="n">Y1</span><span class="p">,</span> <span class="n">mx</span><span class="p">,</span><span class="n">my</span><span class="p">);</span>
+                <span class="n">FarFromMic</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">closedistance</span> <span class="o">/</span> <span class="n">mindistance</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">mul</span> <span class="o">+=</span> <span class="n">Distance2Point</span><span class="p">(</span><span class="n">tam</span><span class="p">.</span><span class="n">X1</span><span class="p">,</span> <span class="n">tam</span><span class="p">.</span><span class="n">Y1</span><span class="p">,</span> <span class="n">tam</span><span class="p">.</span><span class="n">X2</span><span class="p">,</span> <span class="n">tam</span><span class="p">.</span><span class="n">Y2</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">IsStack</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">mul</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="n">mul</span> <span class="o">=</span> <span class="n">BaseDistance</span> <span class="o">/</span> <span class="n">mul</span> <span class="o">*</span> <span class="n">finalabsort</span><span class="o">*</span><span class="n">FarFromMic</span><span class="p">;</span>
+        <span class="p">}</span>    
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">circledrawoffset</span><span class="p">(</span><span class="n">cirpos</span><span class="p">.</span><span class="n">X</span><span class="p">,</span><span class="n">cirpos</span><span class="p">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">mul</span><span class="p">);</span>
+        <span class="n">mainregion</span><span class="p">.</span><span class="n">Children</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="n">lasttimej</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Với các tia đã thực sự chạm đến người nghe, chúng ta truy ngược về tổng quãng được âm thanh đã di chuyển để tính ra tỉ lệ chênh lệch mức cường độ âm so với âm thanh gốc và nhân với các hệ số hấp thụ của vật liệu.</p>
+<p>Tiếp đó vẽ các vòng tròn tại điểm phản xạ đầu của các tia có sự tiếp xúc với vị trí nghe với độ fill bằng với tỉ lệ mức cường độ âm tại điểm tiếp xúc với mức cường độ âm gốc.</p>
+<img src='demoapp2.png'/>
+<h3 id="v-thử-nghiệm-phần-mềm">V. Thử nghiệm phần mềm</h3>
+<p>Giả sử chúng ta có một căn phòng có kích thước 4m x 4m, phổ biến với người Việt Nam</p>
+<p>Vị trí đặt loa sẽ là 1m, 0.6m</p>
+<p>Vị trí người nghe 2m, 2m</p>
+<p>Hệ số hấp thụ 0.2</p>
+<p>Và số tia âm thanh là 103 tia (ở đây nên chọn số nguyên tố để có thể đưa ra kết quả sát thực tế nhất)</p>
+<img src='demoapp3.png'/>
+<p>Như hình sau chúng ta nên lắp đặt tiêu âm tại vị trí 1.32m</p>
+<img src='demoapp4.png'/>
+<h2 id="c-kết-luận">C. Kết Luận</h2>
+<p>App này đã thực hiện đúng và đủ ý tưởng ban đầu của mình, nhưng cần cải thiện thêm một số thứ như là như thế nào là một tia âm thanh tiếp xúc với người nghe, các thuật toán nâng cao gia tăng độ chính xác của độ to âm thanh.</p>
+<p>Hiện tại các bạn có thể dùng qua phần mềm này tại đây:
+<a class="link" href="https://github.com/kpnn0100/ReflectionCalculator"  target="_blank" rel="noopener"
+    >https://github.com/kpnn0100/ReflectionCalculator</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/c#/">C#</a>
+        
+            <a href="/tags/sound-engineering/">Sound Engineering</a>
+        
+            <a href="/tags/kpnn/">kpnn</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">True Position: VST3 Plugin giả lập vị trí âm thanh trong phòng</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 kpnn | Sound Engineering
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#a-các-lí-thuyết-về-phản-xạ-âm-thanh">A. Các lí thuyết về phản xạ âm thanh</a>
+      <ol>
+        <li><a href="#i-phản-xạ-của-âm-thanh-là-gì">I. Phản xạ của âm thanh là gì?</a></li>
+        <li><a href="#ii-phản-xạ-này-ảnh-hưởng-như-thế-nào-đến-sự-tinh-khiết-của-nguồn-âm">II. Phản xạ này ảnh hưởng như thế nào đến sự “tinh khiết” của nguồn âm?</a></li>
+        <li><a href="#iii-hạn-chế-phản-xạ-âm-thanh">III. Hạn chế phản xạ âm thanh</a>
+          <ol>
+            <li><a href="#1dùng-tiêu-âm">1.	Dùng tiêu âm</a></li>
+            <li><a href="#2dùng-tán-âm">2.	Dùng tán âm</a></li>
+          </ol>
+        </li>
+        <li><a href="#iv-phương-pháp-chọn-vị-trí-để-tiêu-âm-cơ-bản">IV. Phương pháp chọn vị trí để tiêu âm cơ bản</a></li>
+        <li><a href="#v-những-bất-cập-của-phương-pháp-chỉ-tiêu-âm-phản-xạ-đầu">V. Những bất cập của phương pháp chỉ tiêu âm phản xạ đầu</a></li>
+      </ol>
+    </li>
+    <li><a href="#b-reflection-calculator">B. Reflection Calculator</a>
+      <ol>
+        <li><a href="#i-tổng-quan-dự-án">I. Tổng quan dự án</a></li>
+        <li><a href="#ii-ý-tưởng-ban-đầu">II. Ý tưởng ban đầu</a></li>
+        <li><a href="#iii-khởi-tạo">III. Khởi tạo</a></li>
+        <li><a href="#iv-thuật-toán">IV. Thuật toán</a></li>
+        <li><a href="#v-thử-nghiệm-phần-mềm">V. Thử nghiệm phần mềm</a></li>
+      </ol>
+    </li>
+    <li><a href="#c-kết-luận">C. Kết Luận</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
