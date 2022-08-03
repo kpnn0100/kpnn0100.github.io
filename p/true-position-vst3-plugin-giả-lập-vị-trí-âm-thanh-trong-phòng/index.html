@@ -365,6 +365,12 @@ Ngoài ra, rất là phức tạp để có thể tạo được thông số del
     <source src="tp.mp3" type="audio/mpeg">
   </audio>
 </figure>
+<p>Âm thanh giới thiệu:</p>
+<figure {{ with .Get "class" }}class="{{ . }}"{{ end }}>
+  <audio controls preload="{{ .Get "preload" | default "metadata" }}">
+    <source src="demo.mp3" type="audio/mpeg">
+  </audio>
+</figure>
 <p>Hiện tại các bạn có thể dùng thử phiên bản đầu tiên của Plugin này tại đây:</p>
 <p><a class="link" href="https://github.com/kpnn0100/TruePosition"  target="_blank" rel="noopener"
     >https://github.com/kpnn0100/TruePosition</a></p>
