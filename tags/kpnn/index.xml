@@ -7,9 +7,245 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Wed, 03 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://kpnn0100.github.io/tags/kpnn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>True Position: VST3 Plugin giả lập vị trí âm thanh trong phòng</title>
+        <link>https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/</link>
+        <pubDate>Wed, 03 Aug 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/</guid>
+        <description>&lt;img src="https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/TruePosition.png" alt="Featured image of post True Position: VST3 Plugin giả lập vị trí âm thanh trong phòng" /&gt;
+&lt;h2 id=&#34;a-các-lý-thuyết&#34;&gt;A. Các lý thuyết&lt;/h2&gt;
+&lt;p&gt;Trước khi đến với plugin của mình, chúng ta cần hiểu các khái niệm vật lý cơ bản để rõ hơn tác dụng của plugin này.&lt;/p&gt;
+&lt;h3 id=&#34;i-cách-chúng-ta-định-hướng-âm-thanh&#34;&gt;I. Cách chúng ta định hướng âm thanh&lt;/h3&gt;
+&lt;h4 id=&#34;1-interaural-time-differencechênh-lệch-thời-gian-tiếp-nhận&#34;&gt;1. Interaural Time Difference/Chênh lệch thời gian tiếp nhận&lt;/h4&gt;
+&lt;p&gt;Chúng ta có 2 tai, được đặt ở 2 vị trí cách nhau. Điều này khiến cho cách chúng ta tiếp nhận một nguồn âm là khác nhau ở mỗi bên tai.&lt;/p&gt;
+&lt;p&gt;Với các nguồn âm ở bên phải chúng ta, tai phải sẽ tiếp nhận dao động âm thanh sớm hơn so với tai trái. Điều ngược lại sẽ xảy ra với các nguồn âm bên trái.&lt;/p&gt;
+&lt;p&gt;Độ chênh lệch đó có thể được diễn giải bằng phương trình sau:&lt;/p&gt;
+&lt;p&gt;$$
+\Delta t = \frac{|d_l-d_r|}{c}
+$$&lt;/p&gt;
+&lt;p&gt;trong đó&lt;/p&gt;
+&lt;p&gt;$d_l$ : khoảng cách từ nguồn âm đến tai trái&lt;/p&gt;
+&lt;p&gt;$d_r$ : khoảng cách từ nguồn âm đến tai phải&lt;/p&gt;
+&lt;p&gt;$c$ : hằng số tốc độ âm thanh trong môi trường, $c = 343 \frac{m}{s}$ trong điều kiện tự nhiên&lt;/p&gt;
+&lt;h4 id=&#34;2-interaural-level-differencechênh-lệch-âm-lượng-tiếp-nhận&#34;&gt;2. Interaural Level Difference/Chênh lệch âm lượng tiếp nhận&lt;/h4&gt;
+&lt;p&gt;Nhờ vào cấu tạo đầu của chúng ta và vị trí phân bổ 2 tai, các vùng bị che khuất bởi đầu của mình sẽ có chênh lệch về biên độ dao động, một phần dao động từ nguồn âm đã bị đầu chúng ta &amp;ldquo;ăn&amp;rdquo; mất. Chúng ta sẽ cùng xem hình sau để dễ hình dung về cả 2 sự chênh lệch này.&lt;/p&gt;
+&lt;img src=&#39;itd.png&#39;/&gt;
+&lt;h4 id=&#34;3-stimulus-spectrumsự-thay-đổi-về-tần-số&#34;&gt;3. Stimulus Spectrum/Sự thay đổi về tần số&lt;/h4&gt;
+&lt;p&gt;Hãy đặt trước mặt 1 nguồn phát âm thanh, có thể là một cái loa hay một cái quạt. Từ từ cúi đầu xuống và ngửa đầu lên trong khi cổ vẫn hướng về phía nguồn âm, ta sẽ thấy được một sự khác biệt ko đến từ việc chênh lệch tiếp nhận giữa 2 bên tai mà đến từ chính âm sắc của nguồn âm.&lt;/p&gt;
+&lt;p&gt;Cấu tạo của tai rất phức tạp dẫn đến các cộng hưởng về tần số của âm thanh sẽ khác nhau đối với các hướng tiếp nhận âm thanh khác nhau.&lt;/p&gt;
+&lt;p&gt;Đối với các nguồn âm trước mặt, âm thanh dường như có vẻ rõ nét hơn.&lt;/p&gt;
+&lt;img src=&#39;ear.jpg&#39;/&gt;
+&lt;h3 id=&#34;ii-đường-đi-của-âm-thanh-trong-căn-phòng&#34;&gt;II. Đường đi của âm thanh trong căn phòng&lt;/h3&gt;
+&lt;p&gt;Các bạn có thể đọc bài viết của mình về dự án &amp;ldquo;Reflection Calculator&amp;rdquo; để hiểu rõ hơn vấn đề này. Ở đây mình sẽ chỉ tóm tắt.&lt;/p&gt;
+&lt;h4 id=&#34;1-sự-phản-xạ-âm&#34;&gt;1. Sự phản xạ âm&lt;/h4&gt;
+&lt;p&gt;Ngoài âm thanh trực tiếp đi đến tai, chúng ta còn có các nguồn âm phụ được tạo ra bởi chính nguồn âm chính, có thời gian đến tai mình cũng như biên độ khác với nguồn âm chính.&lt;/p&gt;
+&lt;img src=&#39;ref.ppm&#39;/&gt;
+&lt;h4 id=&#34;2-sự-định-hướng-của-phản-xạ-âm&#34;&gt;2. Sự định hướng của phản xạ âm&lt;/h4&gt;
+&lt;p&gt;Và cũng không ngoại lệ, những âm thanh phản xạ cũng có các đặc tính giống như nguồn âm gốc ban đầu, qua đó chúng ta có thể xác định được âm thanh phản xạ ở vị trí nào.&lt;/p&gt;
+&lt;p&gt;Với một căn phòng hình dạng bình thường, chúng ta sẽ có 6 phản xạ đầu có âm lượng lớn nhất đến từ 6 mặt của căn phòng.&lt;/p&gt;
+&lt;p&gt;Và các phản xạ sau đó, chúng ta có thể coi như đó là âm vang (reverb)&lt;/p&gt;
+&lt;h2 id=&#34;b-true-position---một-plugin-được-phát-triển-bởi-mình&#34;&gt;B. True Position - Một plugin được phát triển bởi mình&lt;/h2&gt;
+&lt;h3 id=&#34;i-tại-sao-mình-làm-plugin-này&#34;&gt;I. Tại sao mình làm plugin này&lt;/h3&gt;
+&lt;p&gt;Bản thân mình là một người viết nhạc, một người hòa âm và một người phối khí. Trong quá trình sáng tác, hoàn thiện các tác phẩm âm nhạc, mình nhận ra một thao tác mình lặp lại rất nhiều lần nhưng ko đạt được độ hiệu quả cao do mình ko có đủ thời gian để tập trung vào một vấn đề quá nhiều.&lt;/p&gt;
+&lt;p&gt;Vấn đề đó chính là tạo không gian cho âm thanh. Một cây guitar ở bên trái 30 độ, một cây violin ở bên phải 45 độ hay một cây piano ở trước mặt mình. Cách nhanh nhất và phổ biến nhất mọi người hay dùng để tạo ra không gian trong âm thanh chính là lệch đi biên độ dao động của 2 bên tai, tạo ra một sự chênh lệch 2 bên tai cho 1 nguồn âm.&lt;/p&gt;
+&lt;p&gt;Nhưng cách này lại không đem đến được sự chính xác, nhất là khi nguồn âm di chuyển, chúng ta có thể nhận ra rõ ràng vấn đề của phương pháp này, âm thanh có vẻ như đang đi xuyên qua đầu mình, chứ ko phải đi ngang qua trước mặt như cách mà nó phải xảy ra. Hãy thử tưởng tượng một ca sĩ đi xuyên qua đầu mình, chỉ nghĩ đến thôi đã thấy rợn người.&lt;/p&gt;
+&lt;p&gt;Cách mình hay sử dụng đó là dùng một plugin khác có sẵn hoặc dùng chính các tính năng của DAW để tạo ra sự chênh lệch về thời gian của âm thanh, kết hợp với chênh lệch về biên độ để tạo ra một không gian chính xác nhất.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NHƯNG&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Tất nhiên là sẽ có một bất cập nào đấy khiến mình phải bỏ công viết plugin này. Bỏ qua các yếu tố cá nhân như muốn thể hiện bản thân ở lĩnh vực này. Rất khó để có thể kiểm soát những thành phần của bản nhạc chỉ việc thay đổi chênh lệch về thời gian, khi số lượng nhạc cụ đã đạt tới con số 10 15, mình không thể biết được cây piano đầu tiên mình đã đặt nó ở vị trí nào, chỉ dùng tai để nghe không thể xác định chính xác được. Điều này có thể gây nên những xung đột về không gian, chẳng hạn như guitar và vocal bè ở chung 1 vị trí (Nếu điều này xảy ra trong thực tế nghĩa là vocal bè ngồi lên đầu guitar :&amp;gt; rất là dị), nhưng rất khó để xác định được vấn đề đến từ 2 cái thằng này vì giới hạn của tai người.&lt;/p&gt;
+&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
+  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
+    &lt;source src=&#34;panning.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
+  &lt;/audio&gt;
+&lt;/figure&gt;
+Ngoài ra, rất là phức tạp để có thể tạo được thông số delay đúng với thực tế ở trong 1 căn phòng, gần như cách mình sử dụng chỉ là chọn thời gian chênh lệch giữa các lần delay bằng với một phách hay nửa phách, để cho dù nó có sai với thực tế thì nó vẫn phù hợp với tính nhạc.
+&lt;p&gt;Vì thế mình quyết định viết 1 cái plugin có giao diện trực quan để kiểm soát những thành phần này tốt hơn.&lt;/p&gt;
+&lt;h3 id=&#34;ii-ý-tưởng-ban-đầu&#34;&gt;II. Ý tưởng ban đầu&lt;/h3&gt;
+&lt;p&gt;&lt;i&gt;&amp;ldquo;Nó sẽ chỉ cần 1 cái kéo thả tương ứng với vị trí nguồn phát&amp;rdquo;&lt;/i&gt; - mình nghĩ&lt;/p&gt;
+&lt;p&gt;Giao diện đó phải là một cái gì đấy khác với các plugin thông thường, nơi mà mọi thứ được thể hiện bằng số giống với các đồ analog ngày xưa. Giao diện đó phải trực quan và dễ sử dụng, càng ít sự tương tác càng tốt, nhưng ko được bỏ qua những thông số quan trọng.&lt;/p&gt;
+&lt;p&gt;Xong phần giao diện, thuật toán là cái rất quan trọng với 1 plugin, một thuật toán dở có thể làm plugin bị trôi vào dĩ vãng. Làm sao để tạo ra sự chênh lệch về thời gian?&lt;/p&gt;
+&lt;p&gt;Phải chăng chỉ cần giữ lại những sample của quá khứ và phát nó lại ở một thời điểm mình đã tính ra được dựa vào những công thức vốn có thì chúng ta sẽ có một phần trình diễn hoàn hảo đến từ các con số thập phân dấu phẩy động.&lt;/p&gt;
+&lt;p&gt;Nhưng không đơn giản vậy, hiệu năng là một thứ rất đáng lưu ý đối với real time digital signal processing (Xử lý tín hiệu thời gian thực).&lt;/p&gt;
+&lt;p&gt;Làm sao để chúng ta có thể liên tục ghi những sample mới đồng thời biết chính xác địa chỉ cần truy cập của sample cũ. Việc giữ cho mảng của chúng ta luôn có sample mới nhất nằm ở phần từ 0 của mảng sẽ rất tốn hiệu năng của máy tính vì nó phải liên tục làm mới mảng để đưa ra được vị trí đúng cho từng phần tử.&lt;/p&gt;
+&lt;p&gt;Một giải pháp đó chính là mảng liên kết, bằng cách liên tục chèn phần tử mới vào đầu mảng, chúng ta sẽ luôn có một thứ tự đúng của mỗi phần tử, phần tử đầu tiên là sample vừa mới được tiếp nhận, và phần tử cuối cùng là phần tử &amp;ldquo;già&amp;rdquo; nhất của mảng.&lt;/p&gt;
+&lt;p&gt;vẫn là một cái NHƯNG&lt;/p&gt;
+&lt;p&gt;Việc truy cập vào một phần tử cụ thể xảy ra liên tục nên dùng mảng liên kết sẽ ko thể tối ưu được chuyện này vì muốn truy cập vào phần tử của mảng liên kết, bắt buộc phải duyệt qua từng phần tử cho đến phần tử cần tìm. Hàng trăm, hàng nghìn lệnh so sánh ko cần thiết sẽ là một thất bại cho dự án này.&lt;/p&gt;
+&lt;p&gt;&lt;i&gt;Vậy thì kết hợp 2 cái lại&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;Chúng ta tạo ra mảng liên kết của riêng mình. Bằng cách dùng 1 biến để lưu giá trị tương ứng với địa chỉ của phần tử đầu chúng ta có thể thích nghi được với sự làm mới liên tục của dữ liệu âm thanh.&lt;/p&gt;
+&lt;p&gt;Chúng ta sẽ cùng lúc, ghi đè dữ liệu mới vào địa chỉ mà chúng ta đang đánh dấu là địa chỉ của cái đầu và cập nhật địa chỉ tiếp theo. Điều này đỏi hỏi số lượng phần tử của mảng phải là một hằng số&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;numSamples&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;PastSample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bufferLChannel&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;maxdelaysample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Đã có được sự chênh lệch về âm thanh cơ bản, chúng ta sẽ tạo ra chênh lệch về biên độ. Điều này thậm chí còn đơn giản hơn khi mà chỉ cần cho rằng chênh lệch biên độ tỉ lệ thuận với chênh lệch thời gian.&lt;/p&gt;
+&lt;p&gt;Và ta đã xong phần định hướng âm, vậy còn phần tạo ra các phản xạ âm trong phòng.&lt;/p&gt;
+&lt;p&gt;Vẫn rất là đơn giản, chúng ta sẽ sử dụng hình học cơ bản để tìm ra các điểm phản xạ âm mà tiếp xúc đến tai người nghe.&lt;/p&gt;
+&lt;h3 id=&#34;iii-thực-nghiệm&#34;&gt;III. Thực nghiệm&lt;/h3&gt;
+&lt;p&gt;Đây là giao diện sử dụng của plugin:&lt;/p&gt;
+&lt;img src=&#39;appdemo.png&#39;/&gt;
+&lt;p&gt;Chấm màu đen là vị trí của người nghe&lt;/p&gt;
+&lt;p&gt;Chấm trắng có thể kéo thả, là vị trí của nguồn phát sẽ liên kết với slider Position X, Position Y&lt;/p&gt;
+&lt;p&gt;Room Length: kích thước phòng theo chiều ngang&lt;/p&gt;
+&lt;p&gt;Room Width: kích thước phòng theo chiều dọc&lt;/p&gt;
+&lt;p&gt;Room Heigh: kích thước phòng theo chiều cao&lt;/p&gt;
+&lt;p&gt;Dry: Độ lớn của âm thanh trực tiếp&lt;/p&gt;
+&lt;p&gt;Wet: độ lớn của những âm thanh phản xạ&lt;/p&gt;
+&lt;p&gt;Hãy cùng so sánh phương pháp thông thường và phương pháp sử dụng plugin của mình (Nhớ đeo tai nghe nhé)&lt;/p&gt;
+&lt;p&gt;Cách panning thông thường:&lt;/p&gt;
+&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
+  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
+    &lt;source src=&#34;panning.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
+  &lt;/audio&gt;
+&lt;/figure&gt;
+&lt;p&gt;Dùng plugin của mình vặn tham số x:&lt;/p&gt;
+&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
+  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
+    &lt;source src=&#34;tp.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
+  &lt;/audio&gt;
+&lt;/figure&gt;
+&lt;p&gt;Âm thanh giới thiệu:&lt;/p&gt;
+&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
+  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
+    &lt;source src=&#34;demo.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
+  &lt;/audio&gt;
+&lt;/figure&gt;
+&lt;p&gt;Hiện tại các bạn có thể dùng thử phiên bản đầu tiên của Plugin này tại đây:&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kpnn0100/TruePosition&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/kpnn0100/TruePosition&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Nhận diện phần khuyết tật của xoài bằng CNN và Image Processing</title>
+        <link>https://kpnn0100.github.io/p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/</link>
+        <pubDate>Tue, 02 Aug 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://kpnn0100.github.io/p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/</guid>
+        <description>&lt;img src="https://kpnn0100.github.io/p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/Mango.png" alt="Featured image of post Nhận diện phần khuyết tật của xoài bằng CNN và Image Processing" /&gt;
+&lt;p&gt;Nhận diện và trích xuất phần khuyết tật của quả xoài là một bài toán quan trọng phục vụ trong việc tự động hóa quá trình sản xuất. Bài viết này sẽ trình bày về việc hiện thực hóa các thuật toán xử lý ảnh cùng với đó là tạo ra dữ liệu để training cũng như sử dụng model U-net để nhận diện những điểm ảnh thuộc quả xoài và phần khuyết tật của quả xoài.&lt;/p&gt;
+&lt;h2 id=&#34;giới-thiệu&#34;&gt;Giới thiệu&lt;/h2&gt;
+&lt;p&gt;Mô hình này sẽ gồm 2 giai đoạn chính đó là Image Segmentation nhận diện vùng chứa quả xoài và Image Segmentation nhận diện vùng chứa phần khuyết tật. Với đầu vào là một bức ảnh bất kỳ chứa quả xoài, mô hình này sẽ nhận diện vùng chứa quả xoài dưới dạng binary image. Tiếp đó, mô hình sẽ phải đưa ra được những vùng được đánh giá là khuyết tật ở trong mask của binary image đã được nhận diện ở trên và tính toán ra tỉ lệ phần trăm so với vùng chứa quả xoài. Tôi đề xuất sử dụng kiến trúc mạng U-net để thực hiện giai đoạn 1 và thuật toán xử lý ảnh binary threshold cải tiến để thực hiện giai đoạn 2.&lt;/p&gt;
+&lt;h2 id=&#34;giai-đoạn-image-segmentation-sử-dụng-cnn&#34;&gt;Giai đoạn Image Segmentation sử dụng CNN&lt;/h2&gt;
+&lt;p&gt;Convolutional Neural Networks là một loại Thuật toán Deep learning lấy hình ảnh làm đầu vào và tìm hiểu các tính năng khác nhau của hình ảnh thông qua các bộ lọc. Điều này cho phép họ tìm hiểu các đối tượng quan trọng có trong hình ảnh, cho phép họ phân biệt hình ảnh này với hình ảnh kia.&lt;/p&gt;
+&lt;p&gt;CNN có hiệu suất tương tự như các Neuron Network được kết nối đầy đủ thông thường. Các CNN này có các trọng số có thể học hỏi từ đầu vào và độ chệch. Mọi nơ-ron được kết nối trong mạng đều nhận được đầu vào và thực hiện một sản phẩm chấm trên đó. Điều này tiến hành theo kiểu phi tuyến tính. Có một chức năng điểm số có thể phân biệt ở cuối. Hàm này bao gồm các điểm số mà chúng ta thu được từ các lớp khác nhau của mạng nơ-ron. Cuối cùng, một hàm mất mát ở cuối để đánh giá hiệu suất của mô hình. Mạng nơ-ron tích chập khác với Mạng nơ-ron tiêu chuẩn ở chỗ có một giả định rõ ràng về đầu vào là một hình ảnh.&lt;/p&gt;
+&lt;h3 id=&#34;u-net&#34;&gt;U-net&lt;/h3&gt;
+&lt;p&gt;Toàn bộ kiến trúc không hề sử dụng một lớp fully connected nào. Các mô hình end-to-end thông thường, lớp kế cuối của mạng sẽ là các lớp fully connected để kết nối các đặc trưng đã phân tích được nhằm đưa ra kết quả dự đoán. Tuy nhiên, ở kiến trúc U-net, việc kết nối các đặc trưng sẽ do nửa thứ 2 của &amp;ldquo;chữ U&amp;rdquo; đảm nhận, điều này giúp mạng không cần mạng fully connected, do đó có thể chấp nhận input với kích thước bất kì.&lt;/p&gt;
+&lt;p&gt;U-net sử dụng Phương pháp đệm (Padding method), điều này giúp kiến trúc có thể phân đoạn hình ảnh được hoàn toàn. Phương pháp này đặc biệt quan trọng khi segment cho các hình ảnh, nếu không, độ phân giải có thể bị hạn chế bởi dung lượng của bộ nhớ GPU.&lt;/p&gt;
+&lt;p&gt;Đối với bài toán Segmentation, hệ đo được sử dụng là IOU (Intersection over Union). Hệ đo này cho thấy tỉ lệ phần diện tích giao so với phần diện tích liên hiệp. Hệ đo này có phương trình như sau:
+$$
+IoU=\frac{|A\cap{B}|}{|A\cup{B}|}
+$$&lt;/p&gt;
+&lt;p&gt;Trong đó $A$ diện tích vùng mà model nhận diện, $B$ là vùng thực tế.&lt;/p&gt;
+&lt;p&gt;Input của model sẽ là ảnh màu có kích thước $128x128x3$ và output là ảnh trắng đen có kích thước 128x128x1, tổng params: 6,667,639, params có thể train: 6,667,639, params không thể train: 0&lt;/p&gt;
+&lt;h3 id=&#34;tìm-kiếm-data&#34;&gt;Tìm kiếm data&lt;/h3&gt;
+&lt;p&gt;Sử dụng 2 dataset 1 là hình ảnh những quả xoài bình thường không dị tật:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.kaggle.com/code/agbajeabdullateef/mango-disease-classification/notebook&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.kaggle.com/code/agbajeabdullateef/mango-disease-classification/notebook&lt;/a&gt;
+2 là hình ảnh những quả xoài khuyết tật xen kẽ(\ref{fig:xoaikhuyetat}):&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://data.mendeley.com/datasets/fmfncxjz3v/1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://data.mendeley.com/datasets/fmfncxjz3v/1&lt;/a&gt;
+Tất cả hình ảnh đều có dạng background trắng xám và quả xoài nằm ở trung tâm, kích thước không đồng bộ.
+&lt;img src=&#39;xoai.png&#39;/&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;img src=&#39;dataxoai.png&#39;/&gt;
+&lt;p&gt;&lt;i&gt;Data thô của quả xoài khuyết tật&lt;/i&gt;&lt;/p&gt;
+&lt;h3 id=&#34;khởi-tạo-dataset&#34;&gt;Khởi tạo dataset&lt;/h3&gt;
+&lt;p&gt;Vì background có dạng đơn giản nên chúng ta có thể dùng thuần xử lý ảnh để lọc ra những pixel chứa quả xoài. Đầu tiên là trích xuất các đặc trưng về màu. Chuyển tất cả ảnh về hệ màu HSV (Hue, Satuaration, Value).Lấy một vài ảnh để đo thông số HSV nhận thấy: background có thông số xấp xỉ (0,0,218) và phần chứa xoài xấp xỉ (35,192,146). Chúng ta sẽ chỉ quan tâm đến 2 giá trị Satuaration và Value vì dataset có nhiều loại xoài với nhiều màu khác nhau, thông số Hue sẽ ko đáng tin cậy. Ý tưởng ban đầu là tìm trung bình các thông số trên của ảnh và tiến hành lọc ra những pixel khác với trung bình (lớn hơn thì là vùng chứa xoài, bé hơn thì là background) với các hằng số bias và hệ số sàn với từng giá trị. Từ đó có thể hình thành phương trình như sau:&lt;/p&gt;
+&lt;p&gt;$$
+o(x,y)= 255 \text{ if } f(x,y)&amp;gt;b
+$$&lt;/p&gt;
+&lt;p&gt;$$
+o(x,y)= 0 \text{ else}
+$$&lt;/p&gt;
+&lt;p&gt;(1)&lt;/p&gt;
+&lt;p&gt;Với $o(x,y)$ là pixel có tọa độ $(x,y)$ của ảnh đầu ra&lt;/p&gt;
+&lt;p&gt;$f(x,y)$ là giá trị tính toán pixel có tọa độ $(x,y)$ của ảnh đầu vào có công thức
+$$
+f(x,y)=h(x,y)\times C_h+s(x,y)\times C_s+v(x,y)\times C_v
+$$&lt;/p&gt;
+&lt;p&gt;$h(x,y),s(x,y),v(x,y)$ giá trị hsv tại pixel có tọa độ $(x,y)$&lt;/p&gt;
+&lt;p&gt;$C_h,C_s,C_v$ là hằng số bias
+$$
+b=((m_h+fl_h)\times C_h+(m_s+fl_s)\times C_s+(m_a+fl_v)\times C_v)\times b_G
+$$&lt;/p&gt;
+&lt;p&gt;Kết quả thu được sẽ có dạng như hình&lt;/p&gt;
+&lt;img src=&#39;xoaimask.png&#39;/&gt;
+&lt;h3 id=&#34;data-augmentation&#34;&gt;Data Augmentation&lt;/h3&gt;
+&lt;p&gt;Vì các background có dạng quá đơn giản nên kết quả train sẽ bị khóa cố định trong 1 vài trường hợp background cụ thể model mới hoạt động tốt được, nên cần thiết phải tăng cường dữ liệu bằng cách thay thế các background đơn bằng background phức tạp. Ở đây, ta chọn các background có độ chi tiết cao như ở ngoài vườn cây.&lt;/p&gt;
+&lt;img src=&#39;cayco.png&#39;/&gt;
+&lt;p&gt;Dataset cuối cùng sẽ có dạng như hình&lt;/p&gt;
+&lt;img src=&#39;finalxoai.png&#39;/&gt;
+### Training
+Chúng ta sẽ dùng biến thiên tốc độ học để điều chỉnh khi gần tới cực tiểu của model và save model sau mỗi epoch dưới tên ‘model.h5’
+&lt;p&gt;Kết quả training, IoU trung bình đạt 0.7066&lt;/p&gt;
+&lt;img src=&#39;ketquatrain.png&#39;/&gt;
+&lt;h2 id=&#34;giai-đoạn-image-segmentation-dùng-digital-image-processing&#34;&gt;Giai đoạn Image Segmentation dùng Digital Image Processing&lt;/h2&gt;
+&lt;h3 id=&#34;tổng-quan&#34;&gt;Tổng quan&lt;/h3&gt;
+&lt;p&gt;Sau khi chúng ta đã lọc ra được những pixel của quả xoài bằng model U-net, chúng ta tiến hành lọc ra những phần khuyết tật. Bằng mắt thường chúng ta dễ dàng nhận ra phần khuyết tật là phần có màu sẫm hơn bình thường, thậm chí là màu đen nâu, vậy cơ chế chúng ta đưa ra sẽ làm tìm những vùng đó bằng thuật toán tìm trung bình như (1).\&lt;/p&gt;
+&lt;h3 id=&#34;tiền-xử-lý-dữ-liệu-vào&#34;&gt;Tiền xử lý dữ liệu vào&lt;/h3&gt;
+&lt;p&gt;Để đạt được kết quả tốt nhất, chúng ta phải loại bỏ đi những thứ khiến thuật toán trung bình bị sai lệch, đầu tiên là đổ bóng của hình, chúng ta sẽ hạn chế việc một bên tối và một bên sáng do ánh sáng chiếu từ một hướng trên quả xoài bằng cách nâng sáng những vùng tối và giảm sáng những vùng sáng, ở đây tác giả sử dụng thuật toán của HViktorTsoi(&lt;a class=&#34;link&#34; href=&#34;https://gist.github.com/HViktorTsoi/8e8b0468a9fb07842669aa368382a7df&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://gist.github.com/HViktorTsoi/8e8b0468a9fb07842669aa368382a7df&lt;/a&gt;)&lt;/p&gt;
+&lt;img src=&#39;shadowhighlight.png&#39;/&gt;
+&lt;p&gt;Tiếp đó chúng ta xử lý nhiễu cho ảnh và làm mịn ảnh để hạn chế những pixel lỗi dùng open CV.\&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;n&#34;&gt;cv2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fastNlMeansDenoisingColored&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tam&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;None&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Tương tự với phần (1), ta lọc phần khuyết tật bằng phương pháp tượng tự nhưng sẽ được lấy theo mask là $5\times5$, nghĩa là 1 pixel có tọa độ là $(x,y)$ được xác định là lỗi nếu trên $50%$ pixel thuộc hình vuông có góc trên tọa độ $(x-2,y-2)$ và góc dưới tọa độ $(x+2,y+2)$ là lỗi.&lt;/p&gt;
+&lt;p&gt;Ngoài ra ta cần phải lấp đầy lỗ trống bên trong mask quả xoài nếu dự đoán bị khuyết phần trong do vấn đề cháy sáng dùng hàm floodfill của openCV:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;n&#34;&gt;cv2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;floodFill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;im&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_flood&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_fill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mask&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\&lt;/span&gt;\
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Sau khi đã lọc ra được số lượng pixel của phần khuyết tật ta đem chia với số lượng pixel của quả xoài để ra được tỉ lệ khuyết tật&lt;/p&gt;
+&lt;h2 id=&#34;thực-nghiệm&#34;&gt;Thực nghiệm&lt;/h2&gt;
+&lt;p&gt;Trong phần này tôi sẽ báo cáo về kết quả thực nghiệm của phương pháp đề xuất trên tập dữ liệu thực tế với data là những quả xoài bị hỏng. Tôi sẽ đánh giá hiệu năng dựa trên toàn bộ quá trình từ giai đoạn 1 đến hết giai đoạn 2.Mô hình này sẽ được đánh giá là tốt nếu như nhận diện đúng và đủ vùng của quả xoài cũng như vùng của những phần khuyết tất và thời gian đáp ứng của hệ thống phải dưới 1 từ quá trình input đến quá trình output. Toàn bộ quá trình được thực hiện trên hệ thống có cấu hình: Intel Core i3 10100f, Ram DDR4 32gb bus 2400Mhz&lt;/p&gt;
+&lt;h3 id=&#34;những-điểm-tốt&#34;&gt;Những điểm tốt&lt;/h3&gt;
+&lt;p&gt;Model nhìn chung khá chính xác đối với những background đơn giản như background trắng, phù hợp để đưa vào sử dụng trong công nghiệp với điều kiện điều chỉnh các hằng số cho phù hợp với môi trường hoạt động.&lt;/p&gt;
+&lt;p&gt;Có thể dùng model và thuật toán này để sử dụng cho các loại trái cây tương tự như: táo, đu đủ, …&lt;/p&gt;
+&lt;img src=&#39;test1.png&#39;/&gt;
+&lt;img src=&#39;test2.png&#39;/&gt;
+&lt;p&gt;Với một số background phức tạp, phương pháp này chưa đem lại độ chính xác có thể tin cậy.&lt;/p&gt;
+&lt;img src=&#39;hanche.png&#39;/&gt;
+&lt;p&gt;Độ trễ quá cao và số lượng có thể nhận diện trên 1 giây thấp (xấp xỉ 2) chưa phù hợp với việc áp dụng vô những ngành công nghiệp hoa quả đòi hỏi năng suất cao.&lt;/p&gt;
+&lt;p&gt;Chưa dự đoán được hình dạng thực tế của quả xoài trong không gian 3 chiều để dự đoán ra diện tích phần khuyết tật một cách chính xác.&lt;/p&gt;
+&lt;h2 id=&#34;tổng-kết&#34;&gt;Tổng kết&lt;/h2&gt;
+&lt;p&gt;Nhìn chung model đã đạt đến độ chính xác cần thiết để áp dụng vào thực tế. Những doanh nghiệp nhỏ và vừa có thể dùng giải pháp này để loại bỏ những quả xoài không mong muốn, tăng chất lượng nông sản một cách tự động, đem đến khách hàng những quả xoài chất lượng nhất. Nhưng không dừng lại ở đó, giải pháp này đòi hỏi có những tinh chỉnh, nâng cấp trực tiếp vào thuật toán xử lý, phải gia tăng chất lượng của thuật toán, giảm thời gian phản hồi cũng như tăng độ chính xác tiệm cận mức tuyệt đối. Ngoài ra giải pháp này cũng cần tăng độ chính xác với những background phức tạp để ứng dụng trong việc chăm sóc xoài tự động, loại bỏ những quả hỏng từ khi còn trên cây.&lt;/p&gt;
+&lt;p&gt;Một số hình ảnh sử dụng thực tế của mô hình được tích hợp trong phần mềm camera:&lt;/p&gt;
+&lt;img src=&#39;testreal1.png&#39;/&gt;
+&lt;img src=&#39;testreal2.png&#39;/&gt;
+&lt;img src=&#39;testreal3.png&#39;/&gt;
+</description>
+        </item>
+        <item>
         <title>Reflection Calculator: Minh họa phản xạ của âm thanh để chọn vị trí tối ưu hiệu quả của Acoustic Panel</title>
         <link>https://kpnn0100.github.io/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/</link>
-        <pubDate>Wed, 03 Aug 2022 00:00:00 +0000</pubDate>
+        <pubDate>Tue, 02 Aug 2022 00:00:00 +0000</pubDate>
         
         <guid>https://kpnn0100.github.io/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/</guid>
         <description>&lt;img src="https://kpnn0100.github.io/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/Reflection%20Calculator.png" alt="Featured image of post Reflection Calculator: Minh họa phản xạ của âm thanh để chọn vị trí tối ưu hiệu quả của Acoustic Panel" /&gt;
@@ -308,131 +544,6 @@ rất khó để có tính toán được chính xác điểm nào xảy ra ph�
 &lt;p&gt;Hiện tại các bạn có thể dùng qua phần mềm này tại đây:
 &lt;a class=&#34;link&#34; href=&#34;https://github.com/kpnn0100/ReflectionCalculator&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://github.com/kpnn0100/ReflectionCalculator&lt;/a&gt;&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>True Position: VST3 Plugin giả lập vị trí âm thanh trong phòng</title>
-        <link>https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/</link>
-        <pubDate>Wed, 03 Aug 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/</guid>
-        <description>&lt;img src="https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/TruePosition.png" alt="Featured image of post True Position: VST3 Plugin giả lập vị trí âm thanh trong phòng" /&gt;
-&lt;h2 id=&#34;a-các-lý-thuyết&#34;&gt;A. Các lý thuyết&lt;/h2&gt;
-&lt;p&gt;Trước khi đến với plugin của mình, chúng ta cần hiểu các khái niệm vật lý cơ bản để rõ hơn tác dụng của plugin này.&lt;/p&gt;
-&lt;h3 id=&#34;i-cách-chúng-ta-định-hướng-âm-thanh&#34;&gt;I. Cách chúng ta định hướng âm thanh&lt;/h3&gt;
-&lt;h4 id=&#34;1-interaural-time-differencechênh-lệch-thời-gian-tiếp-nhận&#34;&gt;1. Interaural Time Difference/Chênh lệch thời gian tiếp nhận&lt;/h4&gt;
-&lt;p&gt;Chúng ta có 2 tai, được đặt ở 2 vị trí cách nhau. Điều này khiến cho cách chúng ta tiếp nhận một nguồn âm là khác nhau ở mỗi bên tai.&lt;/p&gt;
-&lt;p&gt;Với các nguồn âm ở bên phải chúng ta, tai phải sẽ tiếp nhận dao động âm thanh sớm hơn so với tai trái. Điều ngược lại sẽ xảy ra với các nguồn âm bên trái.&lt;/p&gt;
-&lt;p&gt;Độ chênh lệch đó có thể được diễn giải bằng phương trình sau:&lt;/p&gt;
-&lt;p&gt;$$
-\Delta t = \frac{|d_l-d_r|}{c}
-$$&lt;/p&gt;
-&lt;p&gt;trong đó&lt;/p&gt;
-&lt;p&gt;$d_l$ : khoảng cách từ nguồn âm đến tai trái&lt;/p&gt;
-&lt;p&gt;$d_r$ : khoảng cách từ nguồn âm đến tai phải&lt;/p&gt;
-&lt;p&gt;$c$ : hằng số tốc độ âm thanh trong môi trường, $c = 343 \frac{m}{s}$ trong điều kiện tự nhiên&lt;/p&gt;
-&lt;h4 id=&#34;2-interaural-level-differencechênh-lệch-âm-lượng-tiếp-nhận&#34;&gt;2. Interaural Level Difference/Chênh lệch âm lượng tiếp nhận&lt;/h4&gt;
-&lt;p&gt;Nhờ vào cấu tạo đầu của chúng ta và vị trí phân bổ 2 tai, các vùng bị che khuất bởi đầu của mình sẽ có chênh lệch về biên độ dao động, một phần dao động từ nguồn âm đã bị đầu chúng ta &amp;ldquo;ăn&amp;rdquo; mất. Chúng ta sẽ cùng xem hình sau để dễ hình dung về cả 2 sự chênh lệch này.&lt;/p&gt;
-&lt;img src=&#39;itd.png&#39;/&gt;
-&lt;h4 id=&#34;3-stimulus-spectrumsự-thay-đổi-về-tần-số&#34;&gt;3. Stimulus Spectrum/Sự thay đổi về tần số&lt;/h4&gt;
-&lt;p&gt;Hãy đặt trước mặt 1 nguồn phát âm thanh, có thể là một cái loa hay một cái quạt. Từ từ cúi đầu xuống và ngửa đầu lên trong khi cổ vẫn hướng về phía nguồn âm, ta sẽ thấy được một sự khác biệt ko đến từ việc chênh lệch tiếp nhận giữa 2 bên tai mà đến từ chính âm sắc của nguồn âm.&lt;/p&gt;
-&lt;p&gt;Cấu tạo của tai rất phức tạp dẫn đến các cộng hưởng về tần số của âm thanh sẽ khác nhau đối với các hướng tiếp nhận âm thanh khác nhau.&lt;/p&gt;
-&lt;p&gt;Đối với các nguồn âm trước mặt, âm thanh dường như có vẻ rõ nét hơn.&lt;/p&gt;
-&lt;img src=&#39;ear.jpg&#39;/&gt;
-&lt;h3 id=&#34;ii-đường-đi-của-âm-thanh-trong-căn-phòng&#34;&gt;II. Đường đi của âm thanh trong căn phòng&lt;/h3&gt;
-&lt;p&gt;Các bạn có thể đọc bài viết của mình về dự án &amp;ldquo;Reflection Calculator&amp;rdquo; để hiểu rõ hơn vấn đề này. Ở đây mình sẽ chỉ tóm tắt.&lt;/p&gt;
-&lt;h4 id=&#34;1-sự-phản-xạ-âm&#34;&gt;1. Sự phản xạ âm&lt;/h4&gt;
-&lt;p&gt;Ngoài âm thanh trực tiếp đi đến tai, chúng ta còn có các nguồn âm phụ được tạo ra bởi chính nguồn âm chính, có thời gian đến tai mình cũng như biên độ khác với nguồn âm chính.&lt;/p&gt;
-&lt;img src=&#39;ref.ppm&#39;/&gt;
-&lt;h4 id=&#34;2-sự-định-hướng-của-phản-xạ-âm&#34;&gt;2. Sự định hướng của phản xạ âm&lt;/h4&gt;
-&lt;p&gt;Và cũng không ngoại lệ, những âm thanh phản xạ cũng có các đặc tính giống như nguồn âm gốc ban đầu, qua đó chúng ta có thể xác định được âm thanh phản xạ ở vị trí nào.&lt;/p&gt;
-&lt;p&gt;Với một căn phòng hình dạng bình thường, chúng ta sẽ có 6 phản xạ đầu có âm lượng lớn nhất đến từ 6 mặt của căn phòng.&lt;/p&gt;
-&lt;p&gt;Và các phản xạ sau đó, chúng ta có thể coi như đó là âm vang (reverb)&lt;/p&gt;
-&lt;h2 id=&#34;b-true-position---một-plugin-được-phát-triển-bởi-mình&#34;&gt;B. True Position - Một plugin được phát triển bởi mình&lt;/h2&gt;
-&lt;h3 id=&#34;i-tại-sao-mình-làm-plugin-này&#34;&gt;I. Tại sao mình làm plugin này&lt;/h3&gt;
-&lt;p&gt;Bản thân mình là một người viết nhạc, một người hòa âm và một người phối khí. Trong quá trình sáng tác, hoàn thiện các tác phẩm âm nhạc, mình nhận ra một thao tác mình lặp lại rất nhiều lần nhưng ko đạt được độ hiệu quả cao do mình ko có đủ thời gian để tập trung vào một vấn đề quá nhiều.&lt;/p&gt;
-&lt;p&gt;Vấn đề đó chính là tạo không gian cho âm thanh. Một cây guitar ở bên trái 30 độ, một cây violin ở bên phải 45 độ hay một cây piano ở trước mặt mình. Cách nhanh nhất và phổ biến nhất mọi người hay dùng để tạo ra không gian trong âm thanh chính là lệch đi biên độ dao động của 2 bên tai, tạo ra một sự chênh lệch 2 bên tai cho 1 nguồn âm.&lt;/p&gt;
-&lt;p&gt;Nhưng cách này lại không đem đến được sự chính xác, nhất là khi nguồn âm di chuyển, chúng ta có thể nhận ra rõ ràng vấn đề của phương pháp này, âm thanh có vẻ như đang đi xuyên qua đầu mình, chứ ko phải đi ngang qua trước mặt như cách mà nó phải xảy ra. Hãy thử tưởng tượng một ca sĩ đi xuyên qua đầu mình, chỉ nghĩ đến thôi đã thấy rợn người.&lt;/p&gt;
-&lt;p&gt;Cách mình hay sử dụng đó là dùng một plugin khác có sẵn hoặc dùng chính các tính năng của DAW để tạo ra sự chênh lệch về thời gian của âm thanh, kết hợp với chênh lệch về biên độ để tạo ra một không gian chính xác nhất.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;NHƯNG&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Tất nhiên là sẽ có một bất cập nào đấy khiến mình phải bỏ công viết plugin này. Bỏ qua các yếu tố cá nhân như muốn thể hiện bản thân ở lĩnh vực này. Rất khó để có thể kiểm soát những thành phần của bản nhạc chỉ việc thay đổi chênh lệch về thời gian, khi số lượng nhạc cụ đã đạt tới con số 10 15, mình không thể biết được cây piano đầu tiên mình đã đặt nó ở vị trí nào, chỉ dùng tai để nghe không thể xác định chính xác được. Điều này có thể gây nên những xung đột về không gian, chẳng hạn như guitar và vocal bè ở chung 1 vị trí (Nếu điều này xảy ra trong thực tế nghĩa là vocal bè ngồi lên đầu guitar :&amp;gt; rất là dị), nhưng rất khó để xác định được vấn đề đến từ 2 cái thằng này vì giới hạn của tai người.&lt;/p&gt;
-&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
-  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
-    &lt;source src=&#34;panning.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
-  &lt;/audio&gt;
-&lt;/figure&gt;
-Ngoài ra, rất là phức tạp để có thể tạo được thông số delay đúng với thực tế ở trong 1 căn phòng, gần như cách mình sử dụng chỉ là chọn thời gian chênh lệch giữa các lần delay bằng với một phách hay nửa phách, để cho dù nó có sai với thực tế thì nó vẫn phù hợp với tính nhạc.
-&lt;p&gt;Vì thế mình quyết định viết 1 cái plugin có giao diện trực quan để kiểm soát những thành phần này tốt hơn.&lt;/p&gt;
-&lt;h3 id=&#34;ii-ý-tưởng-ban-đầu&#34;&gt;II. Ý tưởng ban đầu&lt;/h3&gt;
-&lt;p&gt;&lt;i&gt;&amp;ldquo;Nó sẽ chỉ cần 1 cái kéo thả tương ứng với vị trí nguồn phát&amp;rdquo;&lt;/i&gt; - mình nghĩ&lt;/p&gt;
-&lt;p&gt;Giao diện đó phải là một cái gì đấy khác với các plugin thông thường, nơi mà mọi thứ được thể hiện bằng số giống với các đồ analog ngày xưa. Giao diện đó phải trực quan và dễ sử dụng, càng ít sự tương tác càng tốt, nhưng ko được bỏ qua những thông số quan trọng.&lt;/p&gt;
-&lt;p&gt;Xong phần giao diện, thuật toán là cái rất quan trọng với 1 plugin, một thuật toán dở có thể làm plugin bị trôi vào dĩ vãng. Làm sao để tạo ra sự chênh lệch về thời gian?&lt;/p&gt;
-&lt;p&gt;Phải chăng chỉ cần giữ lại những sample của quá khứ và phát nó lại ở một thời điểm mình đã tính ra được dựa vào những công thức vốn có thì chúng ta sẽ có một phần trình diễn hoàn hảo đến từ các con số thập phân dấu phẩy động.&lt;/p&gt;
-&lt;p&gt;Nhưng không đơn giản vậy, hiệu năng là một thứ rất đáng lưu ý đối với real time digital signal processing (Xử lý tín hiệu thời gian thực).&lt;/p&gt;
-&lt;p&gt;Làm sao để chúng ta có thể liên tục ghi những sample mới đồng thời biết chính xác địa chỉ cần truy cập của sample cũ. Việc giữ cho mảng của chúng ta luôn có sample mới nhất nằm ở phần từ 0 của mảng sẽ rất tốn hiệu năng của máy tính vì nó phải liên tục làm mới mảng để đưa ra được vị trí đúng cho từng phần tử.&lt;/p&gt;
-&lt;p&gt;Một giải pháp đó chính là mảng liên kết, bằng cách liên tục chèn phần tử mới vào đầu mảng, chúng ta sẽ luôn có một thứ tự đúng của mỗi phần tử, phần tử đầu tiên là sample vừa mới được tiếp nhận, và phần tử cuối cùng là phần tử &amp;ldquo;già&amp;rdquo; nhất của mảng.&lt;/p&gt;
-&lt;p&gt;vẫn là một cái NHƯNG&lt;/p&gt;
-&lt;p&gt;Việc truy cập vào một phần tử cụ thể xảy ra liên tục nên dùng mảng liên kết sẽ ko thể tối ưu được chuyện này vì muốn truy cập vào phần tử của mảng liên kết, bắt buộc phải duyệt qua từng phần tử cho đến phần tử cần tìm. Hàng trăm, hàng nghìn lệnh so sánh ko cần thiết sẽ là một thất bại cho dự án này.&lt;/p&gt;
-&lt;p&gt;&lt;i&gt;Vậy thì kết hợp 2 cái lại&lt;/i&gt;&lt;/p&gt;
-&lt;p&gt;Chúng ta tạo ra mảng liên kết của riêng mình. Bằng cách dùng 1 biến để lưu giá trị tương ứng với địa chỉ của phần tử đầu chúng ta có thể thích nghi được với sự làm mới liên tục của dữ liệu âm thanh.&lt;/p&gt;
-&lt;p&gt;Chúng ta sẽ cùng lúc, ghi đè dữ liệu mới vào địa chỉ mà chúng ta đang đánh dấu là địa chỉ của cái đầu và cập nhật địa chỉ tiếp theo. Điều này đỏi hỏi số lượng phần tử của mảng phải là một hằng số&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;numSamples&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;PastSample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bufferLChannel&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;maxdelaysample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Đã có được sự chênh lệch về âm thanh cơ bản, chúng ta sẽ tạo ra chênh lệch về biên độ. Điều này thậm chí còn đơn giản hơn khi mà chỉ cần cho rằng chênh lệch biên độ tỉ lệ thuận với chênh lệch thời gian.&lt;/p&gt;
-&lt;p&gt;Và ta đã xong phần định hướng âm, vậy còn phần tạo ra các phản xạ âm trong phòng.&lt;/p&gt;
-&lt;p&gt;Vẫn rất là đơn giản, chúng ta sẽ sử dụng hình học cơ bản để tìm ra các điểm phản xạ âm mà tiếp xúc đến tai người nghe.&lt;/p&gt;
-&lt;h3 id=&#34;iii-thực-nghiệm&#34;&gt;III. Thực nghiệm&lt;/h3&gt;
-&lt;p&gt;Đây là giao diện sử dụng của plugin:&lt;/p&gt;
-&lt;img src=&#39;appdemo.png&#39;/&gt;
-&lt;p&gt;Chấm màu đen là vị trí của người nghe&lt;/p&gt;
-&lt;p&gt;Chấm trắng có thể kéo thả, là vị trí của nguồn phát sẽ liên kết với slider Position X, Position Y&lt;/p&gt;
-&lt;p&gt;Room Length: kích thước phòng theo chiều ngang&lt;/p&gt;
-&lt;p&gt;Room Width: kích thước phòng theo chiều dọc&lt;/p&gt;
-&lt;p&gt;Room Heigh: kích thước phòng theo chiều cao&lt;/p&gt;
-&lt;p&gt;Dry: Độ lớn của âm thanh trực tiếp&lt;/p&gt;
-&lt;p&gt;Wet: độ lớn của những âm thanh phản xạ&lt;/p&gt;
-&lt;p&gt;Hãy cùng so sánh phương pháp thông thường và phương pháp sử dụng plugin của mình (Nhớ đeo tai nghe nhé)&lt;/p&gt;
-&lt;p&gt;Cách panning thông thường:&lt;/p&gt;
-&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
-  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
-    &lt;source src=&#34;panning.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
-  &lt;/audio&gt;
-&lt;/figure&gt;
-&lt;p&gt;Dùng plugin của mình vặn tham số x:&lt;/p&gt;
-&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
-  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
-    &lt;source src=&#34;tp.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
-  &lt;/audio&gt;
-&lt;/figure&gt;
-&lt;p&gt;Âm thanh giới thiệu:&lt;/p&gt;
-&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
-  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
-    &lt;source src=&#34;demo.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
-  &lt;/audio&gt;
-&lt;/figure&gt;
-&lt;p&gt;Hiện tại các bạn có thể dùng thử phiên bản đầu tiên của Plugin này tại đây:&lt;/p&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kpnn0100/TruePosition&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/kpnn0100/TruePosition&lt;/a&gt;&lt;/p&gt;
 </description>
         </item>
         

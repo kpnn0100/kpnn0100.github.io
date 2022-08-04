@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Dự án này sẽ nhận diện các pixel chứa quả xoài và tính diện tích phần khuyết tật trên quả xoài'><title>Nhận diện phần khuyết tật của xoài bằng CNN và Image Processing</title>
+
+<link rel='canonical' href='https://kpnn0100.github.io/p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='Nhận diện phần khuyết tật của xoài bằng CNN và Image Processing'>
+<meta property='og:description' content='Dự án này sẽ nhận diện các pixel chứa quả xoài và tính diện tích phần khuyết tật trên quả xoài'>
+<meta property='og:url' content='https://kpnn0100.github.io/p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/'>
+<meta property='og:site_name' content='kpnn | Sound Engineering'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Image Processing' /><meta property='article:tag' content='kpnn' /><meta property='article:published_time' content='2022-08-02T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-08-02T00:00:00&#43;00:00'/><meta property='og:image' content='https://kpnn0100.github.io/p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/Mango.png' />
+<meta name="twitter:title" content="Nhận diện phần khuyết tật của xoài bằng CNN và Image Processing">
+<meta name="twitter:description" content="Dự án này sẽ nhận diện các pixel chứa quả xoài và tính diện tích phần khuyết tật trên quả xoài"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kpnn0100.github.io/p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/Mango.png' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            localStorage.setItem(colorSchemeKey, "dark");
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5f32ea0e707ad4dc12c9398ce31b642e_65895_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">kpnn | Sound Engineering</a></h1>
+            <h2 class="site-description">Ở đây sẽ có tất tần tật những dự án về âm thanh của tui aka kpnn</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/kpnn0100'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/kpnn/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>kpnn</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Lưu trữ</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Tìm kiếm</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/">
+                <img src="/p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/Mango_hu2907c809d45bc33b8d14eaf6680887d3_243174_800x0_resize_box_3.png"
+                        srcset="/p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/Mango_hu2907c809d45bc33b8d14eaf6680887d3_243174_800x0_resize_box_3.png 800w, /p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/Mango_hu2907c809d45bc33b8d14eaf6680887d3_243174_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="265" 
+                        loading="lazy"
+                        alt="Featured image of post Nhận diện phần khuyết tật của xoài bằng CNN và Image Processing" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/cnn/" >
+                CNN
+            </a>
+        
+            <a href="/categories/image-processing/" >
+                Image Processing
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/nh%E1%BA%ADn-di%E1%BB%87n-ph%E1%BA%A7n-khuy%E1%BA%BFt-t%E1%BA%ADt-c%E1%BB%A7a-xo%C3%A0i-b%E1%BA%B1ng-cnn-v%C3%A0-image-processing/">Nhận diện phần khuyết tật của xoài bằng CNN và Image Processing</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Dự án này sẽ nhận diện các pixel chứa quả xoài và tính diện tích phần khuyết tật trên quả xoài
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 02, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    9 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    
+<p>Nhận diện và trích xuất phần khuyết tật của quả xoài là một bài toán quan trọng phục vụ trong việc tự động hóa quá trình sản xuất. Bài viết này sẽ trình bày về việc hiện thực hóa các thuật toán xử lý ảnh cùng với đó là tạo ra dữ liệu để training cũng như sử dụng model U-net để nhận diện những điểm ảnh thuộc quả xoài và phần khuyết tật của quả xoài.</p>
+<h2 id="giới-thiệu">Giới thiệu</h2>
+<p>Mô hình này sẽ gồm 2 giai đoạn chính đó là Image Segmentation nhận diện vùng chứa quả xoài và Image Segmentation nhận diện vùng chứa phần khuyết tật. Với đầu vào là một bức ảnh bất kỳ chứa quả xoài, mô hình này sẽ nhận diện vùng chứa quả xoài dưới dạng binary image. Tiếp đó, mô hình sẽ phải đưa ra được những vùng được đánh giá là khuyết tật ở trong mask của binary image đã được nhận diện ở trên và tính toán ra tỉ lệ phần trăm so với vùng chứa quả xoài. Tôi đề xuất sử dụng kiến trúc mạng U-net để thực hiện giai đoạn 1 và thuật toán xử lý ảnh binary threshold cải tiến để thực hiện giai đoạn 2.</p>
+<h2 id="giai-đoạn-image-segmentation-sử-dụng-cnn">Giai đoạn Image Segmentation sử dụng CNN</h2>
+<p>Convolutional Neural Networks là một loại Thuật toán Deep learning lấy hình ảnh làm đầu vào và tìm hiểu các tính năng khác nhau của hình ảnh thông qua các bộ lọc. Điều này cho phép họ tìm hiểu các đối tượng quan trọng có trong hình ảnh, cho phép họ phân biệt hình ảnh này với hình ảnh kia.</p>
+<p>CNN có hiệu suất tương tự như các Neuron Network được kết nối đầy đủ thông thường. Các CNN này có các trọng số có thể học hỏi từ đầu vào và độ chệch. Mọi nơ-ron được kết nối trong mạng đều nhận được đầu vào và thực hiện một sản phẩm chấm trên đó. Điều này tiến hành theo kiểu phi tuyến tính. Có một chức năng điểm số có thể phân biệt ở cuối. Hàm này bao gồm các điểm số mà chúng ta thu được từ các lớp khác nhau của mạng nơ-ron. Cuối cùng, một hàm mất mát ở cuối để đánh giá hiệu suất của mô hình. Mạng nơ-ron tích chập khác với Mạng nơ-ron tiêu chuẩn ở chỗ có một giả định rõ ràng về đầu vào là một hình ảnh.</p>
+<h3 id="u-net">U-net</h3>
+<p>Toàn bộ kiến trúc không hề sử dụng một lớp fully connected nào. Các mô hình end-to-end thông thường, lớp kế cuối của mạng sẽ là các lớp fully connected để kết nối các đặc trưng đã phân tích được nhằm đưa ra kết quả dự đoán. Tuy nhiên, ở kiến trúc U-net, việc kết nối các đặc trưng sẽ do nửa thứ 2 của &ldquo;chữ U&rdquo; đảm nhận, điều này giúp mạng không cần mạng fully connected, do đó có thể chấp nhận input với kích thước bất kì.</p>
+<p>U-net sử dụng Phương pháp đệm (Padding method), điều này giúp kiến trúc có thể phân đoạn hình ảnh được hoàn toàn. Phương pháp này đặc biệt quan trọng khi segment cho các hình ảnh, nếu không, độ phân giải có thể bị hạn chế bởi dung lượng của bộ nhớ GPU.</p>
+<p>Đối với bài toán Segmentation, hệ đo được sử dụng là IOU (Intersection over Union). Hệ đo này cho thấy tỉ lệ phần diện tích giao so với phần diện tích liên hiệp. Hệ đo này có phương trình như sau:
+$$
+IoU=\frac{|A\cap{B}|}{|A\cup{B}|}
+$$</p>
+<p>Trong đó $A$ diện tích vùng mà model nhận diện, $B$ là vùng thực tế.</p>
+<p>Input của model sẽ là ảnh màu có kích thước $128x128x3$ và output là ảnh trắng đen có kích thước 128x128x1, tổng params: 6,667,639, params có thể train: 6,667,639, params không thể train: 0</p>
+<h3 id="tìm-kiếm-data">Tìm kiếm data</h3>
+<p>Sử dụng 2 dataset 1 là hình ảnh những quả xoài bình thường không dị tật:</p>
+<ul>
+<li><a class="link" href="https://www.kaggle.com/code/agbajeabdullateef/mango-disease-classification/notebook"  target="_blank" rel="noopener"
+    >https://www.kaggle.com/code/agbajeabdullateef/mango-disease-classification/notebook</a>
+2 là hình ảnh những quả xoài khuyết tật xen kẽ(\ref{fig:xoaikhuyetat}):</li>
+<li><a class="link" href="https://data.mendeley.com/datasets/fmfncxjz3v/1"  target="_blank" rel="noopener"
+    >https://data.mendeley.com/datasets/fmfncxjz3v/1</a>
+Tất cả hình ảnh đều có dạng background trắng xám và quả xoài nằm ở trung tâm, kích thước không đồng bộ.
+<img src='xoai.png'/></li>
+</ul>
+<img src='dataxoai.png'/>
+<p><i>Data thô của quả xoài khuyết tật</i></p>
+<h3 id="khởi-tạo-dataset">Khởi tạo dataset</h3>
+<p>Vì background có dạng đơn giản nên chúng ta có thể dùng thuần xử lý ảnh để lọc ra những pixel chứa quả xoài. Đầu tiên là trích xuất các đặc trưng về màu. Chuyển tất cả ảnh về hệ màu HSV (Hue, Satuaration, Value).Lấy một vài ảnh để đo thông số HSV nhận thấy: background có thông số xấp xỉ (0,0,218) và phần chứa xoài xấp xỉ (35,192,146). Chúng ta sẽ chỉ quan tâm đến 2 giá trị Satuaration và Value vì dataset có nhiều loại xoài với nhiều màu khác nhau, thông số Hue sẽ ko đáng tin cậy. Ý tưởng ban đầu là tìm trung bình các thông số trên của ảnh và tiến hành lọc ra những pixel khác với trung bình (lớn hơn thì là vùng chứa xoài, bé hơn thì là background) với các hằng số bias và hệ số sàn với từng giá trị. Từ đó có thể hình thành phương trình như sau:</p>
+<p>$$
+o(x,y)= 255 \text{ if } f(x,y)&gt;b
+$$</p>
+<p>$$
+o(x,y)= 0 \text{ else}
+$$</p>
+<p>(1)</p>
+<p>Với $o(x,y)$ là pixel có tọa độ $(x,y)$ của ảnh đầu ra</p>
+<p>$f(x,y)$ là giá trị tính toán pixel có tọa độ $(x,y)$ của ảnh đầu vào có công thức
+$$
+f(x,y)=h(x,y)\times C_h+s(x,y)\times C_s+v(x,y)\times C_v
+$$</p>
+<p>$h(x,y),s(x,y),v(x,y)$ giá trị hsv tại pixel có tọa độ $(x,y)$</p>
+<p>$C_h,C_s,C_v$ là hằng số bias
+$$
+b=((m_h+fl_h)\times C_h+(m_s+fl_s)\times C_s+(m_a+fl_v)\times C_v)\times b_G
+$$</p>
+<p>Kết quả thu được sẽ có dạng như hình</p>
+<img src='xoaimask.png'/>
+<h3 id="data-augmentation">Data Augmentation</h3>
+<p>Vì các background có dạng quá đơn giản nên kết quả train sẽ bị khóa cố định trong 1 vài trường hợp background cụ thể model mới hoạt động tốt được, nên cần thiết phải tăng cường dữ liệu bằng cách thay thế các background đơn bằng background phức tạp. Ở đây, ta chọn các background có độ chi tiết cao như ở ngoài vườn cây.</p>
+<img src='cayco.png'/>
+<p>Dataset cuối cùng sẽ có dạng như hình</p>
+<img src='finalxoai.png'/>
+### Training
+Chúng ta sẽ dùng biến thiên tốc độ học để điều chỉnh khi gần tới cực tiểu của model và save model sau mỗi epoch dưới tên ‘model.h5’
+<p>Kết quả training, IoU trung bình đạt 0.7066</p>
+<img src='ketquatrain.png'/>
+<h2 id="giai-đoạn-image-segmentation-dùng-digital-image-processing">Giai đoạn Image Segmentation dùng Digital Image Processing</h2>
+<h3 id="tổng-quan">Tổng quan</h3>
+<p>Sau khi chúng ta đã lọc ra được những pixel của quả xoài bằng model U-net, chúng ta tiến hành lọc ra những phần khuyết tật. Bằng mắt thường chúng ta dễ dàng nhận ra phần khuyết tật là phần có màu sẫm hơn bình thường, thậm chí là màu đen nâu, vậy cơ chế chúng ta đưa ra sẽ làm tìm những vùng đó bằng thuật toán tìm trung bình như (1).\</p>
+<h3 id="tiền-xử-lý-dữ-liệu-vào">Tiền xử lý dữ liệu vào</h3>
+<p>Để đạt được kết quả tốt nhất, chúng ta phải loại bỏ đi những thứ khiến thuật toán trung bình bị sai lệch, đầu tiên là đổ bóng của hình, chúng ta sẽ hạn chế việc một bên tối và một bên sáng do ánh sáng chiếu từ một hướng trên quả xoài bằng cách nâng sáng những vùng tối và giảm sáng những vùng sáng, ở đây tác giả sử dụng thuật toán của HViktorTsoi(<a class="link" href="https://gist.github.com/HViktorTsoi/8e8b0468a9fb07842669aa368382a7df"  target="_blank" rel="noopener"
+    >https://gist.github.com/HViktorTsoi/8e8b0468a9fb07842669aa368382a7df</a>)</p>
+<img src='shadowhighlight.png'/>
+<p>Tiếp đó chúng ta xử lý nhiễu cho ảnh và làm mịn ảnh để hạn chế những pixel lỗi dùng open CV.\</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="n">cv2</span><span class="p">.</span><span class="n">fastNlMeansDenoisingColored</span><span class="p">(</span><span class="n">tam</span><span class="p">,</span><span class="n">None</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">21</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Tương tự với phần (1), ta lọc phần khuyết tật bằng phương pháp tượng tự nhưng sẽ được lấy theo mask là $5\times5$, nghĩa là 1 pixel có tọa độ là $(x,y)$ được xác định là lỗi nếu trên $50%$ pixel thuộc hình vuông có góc trên tọa độ $(x-2,y-2)$ và góc dưới tọa độ $(x+2,y+2)$ là lỗi.</p>
+<p>Ngoài ra ta cần phải lấp đầy lỗ trống bên trong mask quả xoài nếu dự đoán bị khuyết phần trong do vấn đề cháy sáng dùng hàm floodfill của openCV:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="n">cv2</span><span class="p">.</span><span class="n">floodFill</span><span class="p">(</span><span class="n">im</span><span class="err">\</span><span class="n">_flood</span><span class="err">\</span><span class="n">_fill</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">255</span><span class="p">)</span><span class="err">\</span>\
+</code></pre></td></tr></table>
+</div>
+</div><p>Sau khi đã lọc ra được số lượng pixel của phần khuyết tật ta đem chia với số lượng pixel của quả xoài để ra được tỉ lệ khuyết tật</p>
+<h2 id="thực-nghiệm">Thực nghiệm</h2>
+<p>Trong phần này tôi sẽ báo cáo về kết quả thực nghiệm của phương pháp đề xuất trên tập dữ liệu thực tế với data là những quả xoài bị hỏng. Tôi sẽ đánh giá hiệu năng dựa trên toàn bộ quá trình từ giai đoạn 1 đến hết giai đoạn 2.Mô hình này sẽ được đánh giá là tốt nếu như nhận diện đúng và đủ vùng của quả xoài cũng như vùng của những phần khuyết tất và thời gian đáp ứng của hệ thống phải dưới 1 từ quá trình input đến quá trình output. Toàn bộ quá trình được thực hiện trên hệ thống có cấu hình: Intel Core i3 10100f, Ram DDR4 32gb bus 2400Mhz</p>
+<h3 id="những-điểm-tốt">Những điểm tốt</h3>
+<p>Model nhìn chung khá chính xác đối với những background đơn giản như background trắng, phù hợp để đưa vào sử dụng trong công nghiệp với điều kiện điều chỉnh các hằng số cho phù hợp với môi trường hoạt động.</p>
+<p>Có thể dùng model và thuật toán này để sử dụng cho các loại trái cây tương tự như: táo, đu đủ, …</p>
+<img src='test1.png'/>
+<img src='test2.png'/>
+<p>Với một số background phức tạp, phương pháp này chưa đem lại độ chính xác có thể tin cậy.</p>
+<img src='hanche.png'/>
+<p>Độ trễ quá cao và số lượng có thể nhận diện trên 1 giây thấp (xấp xỉ 2) chưa phù hợp với việc áp dụng vô những ngành công nghiệp hoa quả đòi hỏi năng suất cao.</p>
+<p>Chưa dự đoán được hình dạng thực tế của quả xoài trong không gian 3 chiều để dự đoán ra diện tích phần khuyết tật một cách chính xác.</p>
+<h2 id="tổng-kết">Tổng kết</h2>
+<p>Nhìn chung model đã đạt đến độ chính xác cần thiết để áp dụng vào thực tế. Những doanh nghiệp nhỏ và vừa có thể dùng giải pháp này để loại bỏ những quả xoài không mong muốn, tăng chất lượng nông sản một cách tự động, đem đến khách hàng những quả xoài chất lượng nhất. Nhưng không dừng lại ở đó, giải pháp này đòi hỏi có những tinh chỉnh, nâng cấp trực tiếp vào thuật toán xử lý, phải gia tăng chất lượng của thuật toán, giảm thời gian phản hồi cũng như tăng độ chính xác tiệm cận mức tuyệt đối. Ngoài ra giải pháp này cũng cần tăng độ chính xác với những background phức tạp để ứng dụng trong việc chăm sóc xoài tự động, loại bỏ những quả hỏng từ khi còn trên cây.</p>
+<p>Một số hình ảnh sử dụng thực tế của mô hình được tích hợp trong phần mềm camera:</p>
+<img src='testreal1.png'/>
+<img src='testreal2.png'/>
+<img src='testreal3.png'/>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/python/">Python</a>
+        
+            <a href="/tags/image-processing/">Image Processing</a>
+        
+            <a href="/tags/kpnn/">kpnn</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 kpnn | Sound Engineering
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.13.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#giới-thiệu">Giới thiệu</a></li>
+    <li><a href="#giai-đoạn-image-segmentation-sử-dụng-cnn">Giai đoạn Image Segmentation sử dụng CNN</a>
+      <ol>
+        <li><a href="#u-net">U-net</a></li>
+        <li><a href="#tìm-kiếm-data">Tìm kiếm data</a></li>
+        <li><a href="#khởi-tạo-dataset">Khởi tạo dataset</a></li>
+        <li><a href="#data-augmentation">Data Augmentation</a></li>
+      </ol>
+    </li>
+    <li><a href="#giai-đoạn-image-segmentation-dùng-digital-image-processing">Giai đoạn Image Segmentation dùng Digital Image Processing</a>
+      <ol>
+        <li><a href="#tổng-quan">Tổng quan</a></li>
+        <li><a href="#tiền-xử-lý-dữ-liệu-vào">Tiền xử lý dữ liệu vào</a></li>
+      </ol>
+    </li>
+    <li><a href="#thực-nghiệm">Thực nghiệm</a>
+      <ol>
+        <li><a href="#những-điểm-tốt">Những điểm tốt</a></li>
+      </ol>
+    </li>
+    <li><a href="#tổng-kết">Tổng kết</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

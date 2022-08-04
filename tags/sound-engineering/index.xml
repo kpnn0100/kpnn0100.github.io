@@ -7,9 +7,134 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Wed, 03 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://kpnn0100.github.io/tags/sound-engineering/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>True Position: VST3 Plugin giả lập vị trí âm thanh trong phòng</title>
+        <link>https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/</link>
+        <pubDate>Wed, 03 Aug 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/</guid>
+        <description>&lt;img src="https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/TruePosition.png" alt="Featured image of post True Position: VST3 Plugin giả lập vị trí âm thanh trong phòng" /&gt;
+&lt;h2 id=&#34;a-các-lý-thuyết&#34;&gt;A. Các lý thuyết&lt;/h2&gt;
+&lt;p&gt;Trước khi đến với plugin của mình, chúng ta cần hiểu các khái niệm vật lý cơ bản để rõ hơn tác dụng của plugin này.&lt;/p&gt;
+&lt;h3 id=&#34;i-cách-chúng-ta-định-hướng-âm-thanh&#34;&gt;I. Cách chúng ta định hướng âm thanh&lt;/h3&gt;
+&lt;h4 id=&#34;1-interaural-time-differencechênh-lệch-thời-gian-tiếp-nhận&#34;&gt;1. Interaural Time Difference/Chênh lệch thời gian tiếp nhận&lt;/h4&gt;
+&lt;p&gt;Chúng ta có 2 tai, được đặt ở 2 vị trí cách nhau. Điều này khiến cho cách chúng ta tiếp nhận một nguồn âm là khác nhau ở mỗi bên tai.&lt;/p&gt;
+&lt;p&gt;Với các nguồn âm ở bên phải chúng ta, tai phải sẽ tiếp nhận dao động âm thanh sớm hơn so với tai trái. Điều ngược lại sẽ xảy ra với các nguồn âm bên trái.&lt;/p&gt;
+&lt;p&gt;Độ chênh lệch đó có thể được diễn giải bằng phương trình sau:&lt;/p&gt;
+&lt;p&gt;$$
+\Delta t = \frac{|d_l-d_r|}{c}
+$$&lt;/p&gt;
+&lt;p&gt;trong đó&lt;/p&gt;
+&lt;p&gt;$d_l$ : khoảng cách từ nguồn âm đến tai trái&lt;/p&gt;
+&lt;p&gt;$d_r$ : khoảng cách từ nguồn âm đến tai phải&lt;/p&gt;
+&lt;p&gt;$c$ : hằng số tốc độ âm thanh trong môi trường, $c = 343 \frac{m}{s}$ trong điều kiện tự nhiên&lt;/p&gt;
+&lt;h4 id=&#34;2-interaural-level-differencechênh-lệch-âm-lượng-tiếp-nhận&#34;&gt;2. Interaural Level Difference/Chênh lệch âm lượng tiếp nhận&lt;/h4&gt;
+&lt;p&gt;Nhờ vào cấu tạo đầu của chúng ta và vị trí phân bổ 2 tai, các vùng bị che khuất bởi đầu của mình sẽ có chênh lệch về biên độ dao động, một phần dao động từ nguồn âm đã bị đầu chúng ta &amp;ldquo;ăn&amp;rdquo; mất. Chúng ta sẽ cùng xem hình sau để dễ hình dung về cả 2 sự chênh lệch này.&lt;/p&gt;
+&lt;img src=&#39;itd.png&#39;/&gt;
+&lt;h4 id=&#34;3-stimulus-spectrumsự-thay-đổi-về-tần-số&#34;&gt;3. Stimulus Spectrum/Sự thay đổi về tần số&lt;/h4&gt;
+&lt;p&gt;Hãy đặt trước mặt 1 nguồn phát âm thanh, có thể là một cái loa hay một cái quạt. Từ từ cúi đầu xuống và ngửa đầu lên trong khi cổ vẫn hướng về phía nguồn âm, ta sẽ thấy được một sự khác biệt ko đến từ việc chênh lệch tiếp nhận giữa 2 bên tai mà đến từ chính âm sắc của nguồn âm.&lt;/p&gt;
+&lt;p&gt;Cấu tạo của tai rất phức tạp dẫn đến các cộng hưởng về tần số của âm thanh sẽ khác nhau đối với các hướng tiếp nhận âm thanh khác nhau.&lt;/p&gt;
+&lt;p&gt;Đối với các nguồn âm trước mặt, âm thanh dường như có vẻ rõ nét hơn.&lt;/p&gt;
+&lt;img src=&#39;ear.jpg&#39;/&gt;
+&lt;h3 id=&#34;ii-đường-đi-của-âm-thanh-trong-căn-phòng&#34;&gt;II. Đường đi của âm thanh trong căn phòng&lt;/h3&gt;
+&lt;p&gt;Các bạn có thể đọc bài viết của mình về dự án &amp;ldquo;Reflection Calculator&amp;rdquo; để hiểu rõ hơn vấn đề này. Ở đây mình sẽ chỉ tóm tắt.&lt;/p&gt;
+&lt;h4 id=&#34;1-sự-phản-xạ-âm&#34;&gt;1. Sự phản xạ âm&lt;/h4&gt;
+&lt;p&gt;Ngoài âm thanh trực tiếp đi đến tai, chúng ta còn có các nguồn âm phụ được tạo ra bởi chính nguồn âm chính, có thời gian đến tai mình cũng như biên độ khác với nguồn âm chính.&lt;/p&gt;
+&lt;img src=&#39;ref.ppm&#39;/&gt;
+&lt;h4 id=&#34;2-sự-định-hướng-của-phản-xạ-âm&#34;&gt;2. Sự định hướng của phản xạ âm&lt;/h4&gt;
+&lt;p&gt;Và cũng không ngoại lệ, những âm thanh phản xạ cũng có các đặc tính giống như nguồn âm gốc ban đầu, qua đó chúng ta có thể xác định được âm thanh phản xạ ở vị trí nào.&lt;/p&gt;
+&lt;p&gt;Với một căn phòng hình dạng bình thường, chúng ta sẽ có 6 phản xạ đầu có âm lượng lớn nhất đến từ 6 mặt của căn phòng.&lt;/p&gt;
+&lt;p&gt;Và các phản xạ sau đó, chúng ta có thể coi như đó là âm vang (reverb)&lt;/p&gt;
+&lt;h2 id=&#34;b-true-position---một-plugin-được-phát-triển-bởi-mình&#34;&gt;B. True Position - Một plugin được phát triển bởi mình&lt;/h2&gt;
+&lt;h3 id=&#34;i-tại-sao-mình-làm-plugin-này&#34;&gt;I. Tại sao mình làm plugin này&lt;/h3&gt;
+&lt;p&gt;Bản thân mình là một người viết nhạc, một người hòa âm và một người phối khí. Trong quá trình sáng tác, hoàn thiện các tác phẩm âm nhạc, mình nhận ra một thao tác mình lặp lại rất nhiều lần nhưng ko đạt được độ hiệu quả cao do mình ko có đủ thời gian để tập trung vào một vấn đề quá nhiều.&lt;/p&gt;
+&lt;p&gt;Vấn đề đó chính là tạo không gian cho âm thanh. Một cây guitar ở bên trái 30 độ, một cây violin ở bên phải 45 độ hay một cây piano ở trước mặt mình. Cách nhanh nhất và phổ biến nhất mọi người hay dùng để tạo ra không gian trong âm thanh chính là lệch đi biên độ dao động của 2 bên tai, tạo ra một sự chênh lệch 2 bên tai cho 1 nguồn âm.&lt;/p&gt;
+&lt;p&gt;Nhưng cách này lại không đem đến được sự chính xác, nhất là khi nguồn âm di chuyển, chúng ta có thể nhận ra rõ ràng vấn đề của phương pháp này, âm thanh có vẻ như đang đi xuyên qua đầu mình, chứ ko phải đi ngang qua trước mặt như cách mà nó phải xảy ra. Hãy thử tưởng tượng một ca sĩ đi xuyên qua đầu mình, chỉ nghĩ đến thôi đã thấy rợn người.&lt;/p&gt;
+&lt;p&gt;Cách mình hay sử dụng đó là dùng một plugin khác có sẵn hoặc dùng chính các tính năng của DAW để tạo ra sự chênh lệch về thời gian của âm thanh, kết hợp với chênh lệch về biên độ để tạo ra một không gian chính xác nhất.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NHƯNG&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Tất nhiên là sẽ có một bất cập nào đấy khiến mình phải bỏ công viết plugin này. Bỏ qua các yếu tố cá nhân như muốn thể hiện bản thân ở lĩnh vực này. Rất khó để có thể kiểm soát những thành phần của bản nhạc chỉ việc thay đổi chênh lệch về thời gian, khi số lượng nhạc cụ đã đạt tới con số 10 15, mình không thể biết được cây piano đầu tiên mình đã đặt nó ở vị trí nào, chỉ dùng tai để nghe không thể xác định chính xác được. Điều này có thể gây nên những xung đột về không gian, chẳng hạn như guitar và vocal bè ở chung 1 vị trí (Nếu điều này xảy ra trong thực tế nghĩa là vocal bè ngồi lên đầu guitar :&amp;gt; rất là dị), nhưng rất khó để xác định được vấn đề đến từ 2 cái thằng này vì giới hạn của tai người.&lt;/p&gt;
+&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
+  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
+    &lt;source src=&#34;panning.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
+  &lt;/audio&gt;
+&lt;/figure&gt;
+Ngoài ra, rất là phức tạp để có thể tạo được thông số delay đúng với thực tế ở trong 1 căn phòng, gần như cách mình sử dụng chỉ là chọn thời gian chênh lệch giữa các lần delay bằng với một phách hay nửa phách, để cho dù nó có sai với thực tế thì nó vẫn phù hợp với tính nhạc.
+&lt;p&gt;Vì thế mình quyết định viết 1 cái plugin có giao diện trực quan để kiểm soát những thành phần này tốt hơn.&lt;/p&gt;
+&lt;h3 id=&#34;ii-ý-tưởng-ban-đầu&#34;&gt;II. Ý tưởng ban đầu&lt;/h3&gt;
+&lt;p&gt;&lt;i&gt;&amp;ldquo;Nó sẽ chỉ cần 1 cái kéo thả tương ứng với vị trí nguồn phát&amp;rdquo;&lt;/i&gt; - mình nghĩ&lt;/p&gt;
+&lt;p&gt;Giao diện đó phải là một cái gì đấy khác với các plugin thông thường, nơi mà mọi thứ được thể hiện bằng số giống với các đồ analog ngày xưa. Giao diện đó phải trực quan và dễ sử dụng, càng ít sự tương tác càng tốt, nhưng ko được bỏ qua những thông số quan trọng.&lt;/p&gt;
+&lt;p&gt;Xong phần giao diện, thuật toán là cái rất quan trọng với 1 plugin, một thuật toán dở có thể làm plugin bị trôi vào dĩ vãng. Làm sao để tạo ra sự chênh lệch về thời gian?&lt;/p&gt;
+&lt;p&gt;Phải chăng chỉ cần giữ lại những sample của quá khứ và phát nó lại ở một thời điểm mình đã tính ra được dựa vào những công thức vốn có thì chúng ta sẽ có một phần trình diễn hoàn hảo đến từ các con số thập phân dấu phẩy động.&lt;/p&gt;
+&lt;p&gt;Nhưng không đơn giản vậy, hiệu năng là một thứ rất đáng lưu ý đối với real time digital signal processing (Xử lý tín hiệu thời gian thực).&lt;/p&gt;
+&lt;p&gt;Làm sao để chúng ta có thể liên tục ghi những sample mới đồng thời biết chính xác địa chỉ cần truy cập của sample cũ. Việc giữ cho mảng của chúng ta luôn có sample mới nhất nằm ở phần từ 0 của mảng sẽ rất tốn hiệu năng của máy tính vì nó phải liên tục làm mới mảng để đưa ra được vị trí đúng cho từng phần tử.&lt;/p&gt;
+&lt;p&gt;Một giải pháp đó chính là mảng liên kết, bằng cách liên tục chèn phần tử mới vào đầu mảng, chúng ta sẽ luôn có một thứ tự đúng của mỗi phần tử, phần tử đầu tiên là sample vừa mới được tiếp nhận, và phần tử cuối cùng là phần tử &amp;ldquo;già&amp;rdquo; nhất của mảng.&lt;/p&gt;
+&lt;p&gt;vẫn là một cái NHƯNG&lt;/p&gt;
+&lt;p&gt;Việc truy cập vào một phần tử cụ thể xảy ra liên tục nên dùng mảng liên kết sẽ ko thể tối ưu được chuyện này vì muốn truy cập vào phần tử của mảng liên kết, bắt buộc phải duyệt qua từng phần tử cho đến phần tử cần tìm. Hàng trăm, hàng nghìn lệnh so sánh ko cần thiết sẽ là một thất bại cho dự án này.&lt;/p&gt;
+&lt;p&gt;&lt;i&gt;Vậy thì kết hợp 2 cái lại&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;Chúng ta tạo ra mảng liên kết của riêng mình. Bằng cách dùng 1 biến để lưu giá trị tương ứng với địa chỉ của phần tử đầu chúng ta có thể thích nghi được với sự làm mới liên tục của dữ liệu âm thanh.&lt;/p&gt;
+&lt;p&gt;Chúng ta sẽ cùng lúc, ghi đè dữ liệu mới vào địa chỉ mà chúng ta đang đánh dấu là địa chỉ của cái đầu và cập nhật địa chỉ tiếp theo. Điều này đỏi hỏi số lượng phần tử của mảng phải là một hằng số&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;numSamples&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;PastSample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bufferLChannel&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;maxdelaysample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Đã có được sự chênh lệch về âm thanh cơ bản, chúng ta sẽ tạo ra chênh lệch về biên độ. Điều này thậm chí còn đơn giản hơn khi mà chỉ cần cho rằng chênh lệch biên độ tỉ lệ thuận với chênh lệch thời gian.&lt;/p&gt;
+&lt;p&gt;Và ta đã xong phần định hướng âm, vậy còn phần tạo ra các phản xạ âm trong phòng.&lt;/p&gt;
+&lt;p&gt;Vẫn rất là đơn giản, chúng ta sẽ sử dụng hình học cơ bản để tìm ra các điểm phản xạ âm mà tiếp xúc đến tai người nghe.&lt;/p&gt;
+&lt;h3 id=&#34;iii-thực-nghiệm&#34;&gt;III. Thực nghiệm&lt;/h3&gt;
+&lt;p&gt;Đây là giao diện sử dụng của plugin:&lt;/p&gt;
+&lt;img src=&#39;appdemo.png&#39;/&gt;
+&lt;p&gt;Chấm màu đen là vị trí của người nghe&lt;/p&gt;
+&lt;p&gt;Chấm trắng có thể kéo thả, là vị trí của nguồn phát sẽ liên kết với slider Position X, Position Y&lt;/p&gt;
+&lt;p&gt;Room Length: kích thước phòng theo chiều ngang&lt;/p&gt;
+&lt;p&gt;Room Width: kích thước phòng theo chiều dọc&lt;/p&gt;
+&lt;p&gt;Room Heigh: kích thước phòng theo chiều cao&lt;/p&gt;
+&lt;p&gt;Dry: Độ lớn của âm thanh trực tiếp&lt;/p&gt;
+&lt;p&gt;Wet: độ lớn của những âm thanh phản xạ&lt;/p&gt;
+&lt;p&gt;Hãy cùng so sánh phương pháp thông thường và phương pháp sử dụng plugin của mình (Nhớ đeo tai nghe nhé)&lt;/p&gt;
+&lt;p&gt;Cách panning thông thường:&lt;/p&gt;
+&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
+  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
+    &lt;source src=&#34;panning.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
+  &lt;/audio&gt;
+&lt;/figure&gt;
+&lt;p&gt;Dùng plugin của mình vặn tham số x:&lt;/p&gt;
+&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
+  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
+    &lt;source src=&#34;tp.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
+  &lt;/audio&gt;
+&lt;/figure&gt;
+&lt;p&gt;Âm thanh giới thiệu:&lt;/p&gt;
+&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
+  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
+    &lt;source src=&#34;demo.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
+  &lt;/audio&gt;
+&lt;/figure&gt;
+&lt;p&gt;Hiện tại các bạn có thể dùng thử phiên bản đầu tiên của Plugin này tại đây:&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kpnn0100/TruePosition&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/kpnn0100/TruePosition&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Reflection Calculator: Minh họa phản xạ của âm thanh để chọn vị trí tối ưu hiệu quả của Acoustic Panel</title>
         <link>https://kpnn0100.github.io/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/</link>
-        <pubDate>Wed, 03 Aug 2022 00:00:00 +0000</pubDate>
+        <pubDate>Tue, 02 Aug 2022 00:00:00 +0000</pubDate>
         
         <guid>https://kpnn0100.github.io/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/</guid>
         <description>&lt;img src="https://kpnn0100.github.io/p/reflection-calculator-minh-h%E1%BB%8Da-ph%E1%BA%A3n-x%E1%BA%A1-c%E1%BB%A7a-%C3%A2m-thanh-%C4%91%E1%BB%83-ch%E1%BB%8Dn-v%E1%BB%8B-tr%C3%AD-t%E1%BB%91i-%C6%B0u-hi%E1%BB%87u-qu%E1%BA%A3-c%E1%BB%A7a-acoustic-panel/Reflection%20Calculator.png" alt="Featured image of post Reflection Calculator: Minh họa phản xạ của âm thanh để chọn vị trí tối ưu hiệu quả của Acoustic Panel" /&gt;
@@ -308,131 +433,6 @@ rất khó để có tính toán được chính xác điểm nào xảy ra ph�
 &lt;p&gt;Hiện tại các bạn có thể dùng qua phần mềm này tại đây:
 &lt;a class=&#34;link&#34; href=&#34;https://github.com/kpnn0100/ReflectionCalculator&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://github.com/kpnn0100/ReflectionCalculator&lt;/a&gt;&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>True Position: VST3 Plugin giả lập vị trí âm thanh trong phòng</title>
-        <link>https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/</link>
-        <pubDate>Wed, 03 Aug 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/</guid>
-        <description>&lt;img src="https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/TruePosition.png" alt="Featured image of post True Position: VST3 Plugin giả lập vị trí âm thanh trong phòng" /&gt;
-&lt;h2 id=&#34;a-các-lý-thuyết&#34;&gt;A. Các lý thuyết&lt;/h2&gt;
-&lt;p&gt;Trước khi đến với plugin của mình, chúng ta cần hiểu các khái niệm vật lý cơ bản để rõ hơn tác dụng của plugin này.&lt;/p&gt;
-&lt;h3 id=&#34;i-cách-chúng-ta-định-hướng-âm-thanh&#34;&gt;I. Cách chúng ta định hướng âm thanh&lt;/h3&gt;
-&lt;h4 id=&#34;1-interaural-time-differencechênh-lệch-thời-gian-tiếp-nhận&#34;&gt;1. Interaural Time Difference/Chênh lệch thời gian tiếp nhận&lt;/h4&gt;
-&lt;p&gt;Chúng ta có 2 tai, được đặt ở 2 vị trí cách nhau. Điều này khiến cho cách chúng ta tiếp nhận một nguồn âm là khác nhau ở mỗi bên tai.&lt;/p&gt;
-&lt;p&gt;Với các nguồn âm ở bên phải chúng ta, tai phải sẽ tiếp nhận dao động âm thanh sớm hơn so với tai trái. Điều ngược lại sẽ xảy ra với các nguồn âm bên trái.&lt;/p&gt;
-&lt;p&gt;Độ chênh lệch đó có thể được diễn giải bằng phương trình sau:&lt;/p&gt;
-&lt;p&gt;$$
-\Delta t = \frac{|d_l-d_r|}{c}
-$$&lt;/p&gt;
-&lt;p&gt;trong đó&lt;/p&gt;
-&lt;p&gt;$d_l$ : khoảng cách từ nguồn âm đến tai trái&lt;/p&gt;
-&lt;p&gt;$d_r$ : khoảng cách từ nguồn âm đến tai phải&lt;/p&gt;
-&lt;p&gt;$c$ : hằng số tốc độ âm thanh trong môi trường, $c = 343 \frac{m}{s}$ trong điều kiện tự nhiên&lt;/p&gt;
-&lt;h4 id=&#34;2-interaural-level-differencechênh-lệch-âm-lượng-tiếp-nhận&#34;&gt;2. Interaural Level Difference/Chênh lệch âm lượng tiếp nhận&lt;/h4&gt;
-&lt;p&gt;Nhờ vào cấu tạo đầu của chúng ta và vị trí phân bổ 2 tai, các vùng bị che khuất bởi đầu của mình sẽ có chênh lệch về biên độ dao động, một phần dao động từ nguồn âm đã bị đầu chúng ta &amp;ldquo;ăn&amp;rdquo; mất. Chúng ta sẽ cùng xem hình sau để dễ hình dung về cả 2 sự chênh lệch này.&lt;/p&gt;
-&lt;img src=&#39;itd.png&#39;/&gt;
-&lt;h4 id=&#34;3-stimulus-spectrumsự-thay-đổi-về-tần-số&#34;&gt;3. Stimulus Spectrum/Sự thay đổi về tần số&lt;/h4&gt;
-&lt;p&gt;Hãy đặt trước mặt 1 nguồn phát âm thanh, có thể là một cái loa hay một cái quạt. Từ từ cúi đầu xuống và ngửa đầu lên trong khi cổ vẫn hướng về phía nguồn âm, ta sẽ thấy được một sự khác biệt ko đến từ việc chênh lệch tiếp nhận giữa 2 bên tai mà đến từ chính âm sắc của nguồn âm.&lt;/p&gt;
-&lt;p&gt;Cấu tạo của tai rất phức tạp dẫn đến các cộng hưởng về tần số của âm thanh sẽ khác nhau đối với các hướng tiếp nhận âm thanh khác nhau.&lt;/p&gt;
-&lt;p&gt;Đối với các nguồn âm trước mặt, âm thanh dường như có vẻ rõ nét hơn.&lt;/p&gt;
-&lt;img src=&#39;ear.jpg&#39;/&gt;
-&lt;h3 id=&#34;ii-đường-đi-của-âm-thanh-trong-căn-phòng&#34;&gt;II. Đường đi của âm thanh trong căn phòng&lt;/h3&gt;
-&lt;p&gt;Các bạn có thể đọc bài viết của mình về dự án &amp;ldquo;Reflection Calculator&amp;rdquo; để hiểu rõ hơn vấn đề này. Ở đây mình sẽ chỉ tóm tắt.&lt;/p&gt;
-&lt;h4 id=&#34;1-sự-phản-xạ-âm&#34;&gt;1. Sự phản xạ âm&lt;/h4&gt;
-&lt;p&gt;Ngoài âm thanh trực tiếp đi đến tai, chúng ta còn có các nguồn âm phụ được tạo ra bởi chính nguồn âm chính, có thời gian đến tai mình cũng như biên độ khác với nguồn âm chính.&lt;/p&gt;
-&lt;img src=&#39;ref.ppm&#39;/&gt;
-&lt;h4 id=&#34;2-sự-định-hướng-của-phản-xạ-âm&#34;&gt;2. Sự định hướng của phản xạ âm&lt;/h4&gt;
-&lt;p&gt;Và cũng không ngoại lệ, những âm thanh phản xạ cũng có các đặc tính giống như nguồn âm gốc ban đầu, qua đó chúng ta có thể xác định được âm thanh phản xạ ở vị trí nào.&lt;/p&gt;
-&lt;p&gt;Với một căn phòng hình dạng bình thường, chúng ta sẽ có 6 phản xạ đầu có âm lượng lớn nhất đến từ 6 mặt của căn phòng.&lt;/p&gt;
-&lt;p&gt;Và các phản xạ sau đó, chúng ta có thể coi như đó là âm vang (reverb)&lt;/p&gt;
-&lt;h2 id=&#34;b-true-position---một-plugin-được-phát-triển-bởi-mình&#34;&gt;B. True Position - Một plugin được phát triển bởi mình&lt;/h2&gt;
-&lt;h3 id=&#34;i-tại-sao-mình-làm-plugin-này&#34;&gt;I. Tại sao mình làm plugin này&lt;/h3&gt;
-&lt;p&gt;Bản thân mình là một người viết nhạc, một người hòa âm và một người phối khí. Trong quá trình sáng tác, hoàn thiện các tác phẩm âm nhạc, mình nhận ra một thao tác mình lặp lại rất nhiều lần nhưng ko đạt được độ hiệu quả cao do mình ko có đủ thời gian để tập trung vào một vấn đề quá nhiều.&lt;/p&gt;
-&lt;p&gt;Vấn đề đó chính là tạo không gian cho âm thanh. Một cây guitar ở bên trái 30 độ, một cây violin ở bên phải 45 độ hay một cây piano ở trước mặt mình. Cách nhanh nhất và phổ biến nhất mọi người hay dùng để tạo ra không gian trong âm thanh chính là lệch đi biên độ dao động của 2 bên tai, tạo ra một sự chênh lệch 2 bên tai cho 1 nguồn âm.&lt;/p&gt;
-&lt;p&gt;Nhưng cách này lại không đem đến được sự chính xác, nhất là khi nguồn âm di chuyển, chúng ta có thể nhận ra rõ ràng vấn đề của phương pháp này, âm thanh có vẻ như đang đi xuyên qua đầu mình, chứ ko phải đi ngang qua trước mặt như cách mà nó phải xảy ra. Hãy thử tưởng tượng một ca sĩ đi xuyên qua đầu mình, chỉ nghĩ đến thôi đã thấy rợn người.&lt;/p&gt;
-&lt;p&gt;Cách mình hay sử dụng đó là dùng một plugin khác có sẵn hoặc dùng chính các tính năng của DAW để tạo ra sự chênh lệch về thời gian của âm thanh, kết hợp với chênh lệch về biên độ để tạo ra một không gian chính xác nhất.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;NHƯNG&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Tất nhiên là sẽ có một bất cập nào đấy khiến mình phải bỏ công viết plugin này. Bỏ qua các yếu tố cá nhân như muốn thể hiện bản thân ở lĩnh vực này. Rất khó để có thể kiểm soát những thành phần của bản nhạc chỉ việc thay đổi chênh lệch về thời gian, khi số lượng nhạc cụ đã đạt tới con số 10 15, mình không thể biết được cây piano đầu tiên mình đã đặt nó ở vị trí nào, chỉ dùng tai để nghe không thể xác định chính xác được. Điều này có thể gây nên những xung đột về không gian, chẳng hạn như guitar và vocal bè ở chung 1 vị trí (Nếu điều này xảy ra trong thực tế nghĩa là vocal bè ngồi lên đầu guitar :&amp;gt; rất là dị), nhưng rất khó để xác định được vấn đề đến từ 2 cái thằng này vì giới hạn của tai người.&lt;/p&gt;
-&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
-  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
-    &lt;source src=&#34;panning.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
-  &lt;/audio&gt;
-&lt;/figure&gt;
-Ngoài ra, rất là phức tạp để có thể tạo được thông số delay đúng với thực tế ở trong 1 căn phòng, gần như cách mình sử dụng chỉ là chọn thời gian chênh lệch giữa các lần delay bằng với một phách hay nửa phách, để cho dù nó có sai với thực tế thì nó vẫn phù hợp với tính nhạc.
-&lt;p&gt;Vì thế mình quyết định viết 1 cái plugin có giao diện trực quan để kiểm soát những thành phần này tốt hơn.&lt;/p&gt;
-&lt;h3 id=&#34;ii-ý-tưởng-ban-đầu&#34;&gt;II. Ý tưởng ban đầu&lt;/h3&gt;
-&lt;p&gt;&lt;i&gt;&amp;ldquo;Nó sẽ chỉ cần 1 cái kéo thả tương ứng với vị trí nguồn phát&amp;rdquo;&lt;/i&gt; - mình nghĩ&lt;/p&gt;
-&lt;p&gt;Giao diện đó phải là một cái gì đấy khác với các plugin thông thường, nơi mà mọi thứ được thể hiện bằng số giống với các đồ analog ngày xưa. Giao diện đó phải trực quan và dễ sử dụng, càng ít sự tương tác càng tốt, nhưng ko được bỏ qua những thông số quan trọng.&lt;/p&gt;
-&lt;p&gt;Xong phần giao diện, thuật toán là cái rất quan trọng với 1 plugin, một thuật toán dở có thể làm plugin bị trôi vào dĩ vãng. Làm sao để tạo ra sự chênh lệch về thời gian?&lt;/p&gt;
-&lt;p&gt;Phải chăng chỉ cần giữ lại những sample của quá khứ và phát nó lại ở một thời điểm mình đã tính ra được dựa vào những công thức vốn có thì chúng ta sẽ có một phần trình diễn hoàn hảo đến từ các con số thập phân dấu phẩy động.&lt;/p&gt;
-&lt;p&gt;Nhưng không đơn giản vậy, hiệu năng là một thứ rất đáng lưu ý đối với real time digital signal processing (Xử lý tín hiệu thời gian thực).&lt;/p&gt;
-&lt;p&gt;Làm sao để chúng ta có thể liên tục ghi những sample mới đồng thời biết chính xác địa chỉ cần truy cập của sample cũ. Việc giữ cho mảng của chúng ta luôn có sample mới nhất nằm ở phần từ 0 của mảng sẽ rất tốn hiệu năng của máy tính vì nó phải liên tục làm mới mảng để đưa ra được vị trí đúng cho từng phần tử.&lt;/p&gt;
-&lt;p&gt;Một giải pháp đó chính là mảng liên kết, bằng cách liên tục chèn phần tử mới vào đầu mảng, chúng ta sẽ luôn có một thứ tự đúng của mỗi phần tử, phần tử đầu tiên là sample vừa mới được tiếp nhận, và phần tử cuối cùng là phần tử &amp;ldquo;già&amp;rdquo; nhất của mảng.&lt;/p&gt;
-&lt;p&gt;vẫn là một cái NHƯNG&lt;/p&gt;
-&lt;p&gt;Việc truy cập vào một phần tử cụ thể xảy ra liên tục nên dùng mảng liên kết sẽ ko thể tối ưu được chuyện này vì muốn truy cập vào phần tử của mảng liên kết, bắt buộc phải duyệt qua từng phần tử cho đến phần tử cần tìm. Hàng trăm, hàng nghìn lệnh so sánh ko cần thiết sẽ là một thất bại cho dự án này.&lt;/p&gt;
-&lt;p&gt;&lt;i&gt;Vậy thì kết hợp 2 cái lại&lt;/i&gt;&lt;/p&gt;
-&lt;p&gt;Chúng ta tạo ra mảng liên kết của riêng mình. Bằng cách dùng 1 biến để lưu giá trị tương ứng với địa chỉ của phần tử đầu chúng ta có thể thích nghi được với sự làm mới liên tục của dữ liệu âm thanh.&lt;/p&gt;
-&lt;p&gt;Chúng ta sẽ cùng lúc, ghi đè dữ liệu mới vào địa chỉ mà chúng ta đang đánh dấu là địa chỉ của cái đầu và cập nhật địa chỉ tiếp theo. Điều này đỏi hỏi số lượng phần tử của mảng phải là một hằng số&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;numSamples&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;PastSample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bufferLChannel&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;maxdelaysample&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;head&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Đã có được sự chênh lệch về âm thanh cơ bản, chúng ta sẽ tạo ra chênh lệch về biên độ. Điều này thậm chí còn đơn giản hơn khi mà chỉ cần cho rằng chênh lệch biên độ tỉ lệ thuận với chênh lệch thời gian.&lt;/p&gt;
-&lt;p&gt;Và ta đã xong phần định hướng âm, vậy còn phần tạo ra các phản xạ âm trong phòng.&lt;/p&gt;
-&lt;p&gt;Vẫn rất là đơn giản, chúng ta sẽ sử dụng hình học cơ bản để tìm ra các điểm phản xạ âm mà tiếp xúc đến tai người nghe.&lt;/p&gt;
-&lt;h3 id=&#34;iii-thực-nghiệm&#34;&gt;III. Thực nghiệm&lt;/h3&gt;
-&lt;p&gt;Đây là giao diện sử dụng của plugin:&lt;/p&gt;
-&lt;img src=&#39;appdemo.png&#39;/&gt;
-&lt;p&gt;Chấm màu đen là vị trí của người nghe&lt;/p&gt;
-&lt;p&gt;Chấm trắng có thể kéo thả, là vị trí của nguồn phát sẽ liên kết với slider Position X, Position Y&lt;/p&gt;
-&lt;p&gt;Room Length: kích thước phòng theo chiều ngang&lt;/p&gt;
-&lt;p&gt;Room Width: kích thước phòng theo chiều dọc&lt;/p&gt;
-&lt;p&gt;Room Heigh: kích thước phòng theo chiều cao&lt;/p&gt;
-&lt;p&gt;Dry: Độ lớn của âm thanh trực tiếp&lt;/p&gt;
-&lt;p&gt;Wet: độ lớn của những âm thanh phản xạ&lt;/p&gt;
-&lt;p&gt;Hãy cùng so sánh phương pháp thông thường và phương pháp sử dụng plugin của mình (Nhớ đeo tai nghe nhé)&lt;/p&gt;
-&lt;p&gt;Cách panning thông thường:&lt;/p&gt;
-&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
-  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
-    &lt;source src=&#34;panning.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
-  &lt;/audio&gt;
-&lt;/figure&gt;
-&lt;p&gt;Dùng plugin của mình vặn tham số x:&lt;/p&gt;
-&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
-  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
-    &lt;source src=&#34;tp.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
-  &lt;/audio&gt;
-&lt;/figure&gt;
-&lt;p&gt;Âm thanh giới thiệu:&lt;/p&gt;
-&lt;figure {{ with .Get &#34;class&#34; }}class=&#34;{{ . }}&#34;{{ end }}&gt;
-  &lt;audio controls preload=&#34;{{ .Get &#34;preload&#34; | default &#34;metadata&#34; }}&#34;&gt;
-    &lt;source src=&#34;demo.mp3&#34; type=&#34;audio/mpeg&#34;&gt;
-  &lt;/audio&gt;
-&lt;/figure&gt;
-&lt;p&gt;Hiện tại các bạn có thể dùng thử phiên bản đầu tiên của Plugin này tại đây:&lt;/p&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kpnn0100/TruePosition&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/kpnn0100/TruePosition&lt;/a&gt;&lt;/p&gt;
 </description>
         </item>
         
