@@ -316,7 +316,7 @@ rất khó để có tính toán được chính xác điểm nào xảy ra ph�
         <pubDate>Wed, 03 Aug 2022 00:00:00 +0000</pubDate>
         
         <guid>https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/</guid>
-        <description>
+        <description>&lt;img src="https://kpnn0100.github.io/p/true-position-vst3-plugin-gi%E1%BA%A3-l%E1%BA%ADp-v%E1%BB%8B-tr%C3%AD-%C3%A2m-thanh-trong-ph%C3%B2ng/TruePosition.png" alt="Featured image of post True Position: VST3 Plugin giả lập vị trí âm thanh trong phòng" /&gt;
 &lt;h2 id=&#34;a-các-lý-thuyết&#34;&gt;A. Các lý thuyết&lt;/h2&gt;
 &lt;p&gt;Trước khi đến với plugin của mình, chúng ta cần hiểu các khái niệm vật lý cơ bản để rõ hơn tác dụng của plugin này.&lt;/p&gt;
 &lt;h3 id=&#34;i-cách-chúng-ta-định-hướng-âm-thanh&#34;&gt;I. Cách chúng ta định hướng âm thanh&lt;/h3&gt;
@@ -403,7 +403,7 @@ Ngoài ra, rất là phức tạp để có thể tạo được thông số del
 &lt;p&gt;Vẫn rất là đơn giản, chúng ta sẽ sử dụng hình học cơ bản để tìm ra các điểm phản xạ âm mà tiếp xúc đến tai người nghe.&lt;/p&gt;
 &lt;h3 id=&#34;iii-thực-nghiệm&#34;&gt;III. Thực nghiệm&lt;/h3&gt;
 &lt;p&gt;Đây là giao diện sử dụng của plugin:&lt;/p&gt;
-&lt;img src=&#39;appdemo.jpg&#39;/&gt;
+&lt;img src=&#39;appdemo.png&#39;/&gt;
 &lt;p&gt;Chấm màu đen là vị trí của người nghe&lt;/p&gt;
 &lt;p&gt;Chấm trắng có thể kéo thả, là vị trí của nguồn phát sẽ liên kết với slider Position X, Position Y&lt;/p&gt;
 &lt;p&gt;Room Length: kích thước phòng theo chiều ngang&lt;/p&gt;
