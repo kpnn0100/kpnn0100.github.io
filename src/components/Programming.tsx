@@ -13,14 +13,14 @@ const cardVariants = {
     opacity: 1,
     x: 0,
     y: 0,
-    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
-};
+} as const;
 
 const tagVariants = {
   hidden: { opacity: 0, scale: 0.8 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: "backOut" } },
-};
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: "backOut" as const } },
+} as const;
 
 export function Programming() {
   return (
