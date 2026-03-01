@@ -5,12 +5,12 @@
 // Then add the import below and include it in the array.
 // ============================================================
 import sugarySide from "./sugary-side";
-import nowhere from "./nowhere";
+import lovedLife from "./loved-life";
 
 import type { Album } from "../types";
 
 /** All albums, ordered newest first */
 export const albums: Album[] = [
   sugarySide,
-  nowhere,
+  lovedLife,
 ];
