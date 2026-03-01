@@ -1,4 +1,5 @@
 import { Outlet, Link, NavLink, useLocation } from "react-router";
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 const navLinks = [
@@ -27,6 +28,11 @@ const navLinks = [
 
 export function Root() {
   const location = useLocation();
+
+  /* Scroll to top on every route change */
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -95,8 +101,8 @@ export function Root() {
           <motion.div
             key={location.pathname}
             initial={false}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
           >
             <Outlet />
           </motion.div>

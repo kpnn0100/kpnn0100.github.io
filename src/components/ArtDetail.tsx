@@ -341,7 +341,12 @@ export function ArtDetail() {
   const project = artProjects.find((p) => p.id === id) ?? artProjects[0];
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
+    <motion.div
+      className="min-h-screen bg-black relative overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+    >
       {/* Ambient glow */}
       <motion.div
         className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-900/10 rounded-full blur-3xl pointer-events-none"
@@ -444,6 +449,6 @@ export function ArtDetail() {
           </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

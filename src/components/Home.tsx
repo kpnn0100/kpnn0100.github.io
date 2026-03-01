@@ -88,7 +88,12 @@ function FloatingOrb({ className, delay = 0 }: { className: string; delay?: numb
 
 export function Home() {
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <motion.div
+      className="min-h-screen relative overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+    >
       {/* Ambient background orbs */}
       <FloatingOrb className="w-96 h-96 bg-purple-800/10 top-10 -left-20" delay={0} />
       <FloatingOrb className="w-80 h-80 bg-teal-800/10 top-32 right-10" delay={2.5} />
@@ -140,18 +145,6 @@ export function Home() {
           >
             Music Producer&nbsp;/&nbsp;Artist&nbsp;/&nbsp;Embedded Software Engineer
           </motion.p>
-
-          {/* Scroll hint */}
-          <motion.div
-            variants={fadeUpVariants}
-            className="mt-12"
-          >
-            <motion.div
-              className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent mx-auto"
-              animate={{ scaleY: [0, 1, 0], opacity: [0, 1, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-            />
-          </motion.div>
         </motion.div>
       </section>
 
@@ -198,6 +191,6 @@ export function Home() {
           ))}
         </motion.div>
       </section>
-    </div>
+    </motion.div>
   );
 }
