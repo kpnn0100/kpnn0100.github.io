@@ -6,36 +6,52 @@
 //   src/data/programming/ - for programming items
 // ============================================================
 
-export interface MusicItem {
-  /** Unique ID (used for ordering) */
-  id: string;
-  /** YouTube video ID (from the URL: youtube.com/watch?v=THIS_PART) */
-  youtubeId: string;
-  /** Song/video title */
+// ── Music types ──
+export interface Track {
+  num: number;
   title: string;
-  /** Full YouTube URL */
-  url: string;
+  featuring?: string;
+  duration?: string;
+  youtubeId?: string;
+  note?: string;
 }
 
-export interface ArtItem {
-  /** Unique ID (also used in the URL: /art/{id}) */
+export interface Album {
   id: string;
-  /** Artwork title */
   title: string;
-  /** Short description for the gallery card */
-  description: string;
-  /** Image URL or local path (relative to public/) */
+  year: string;
+  genre: string;
+  type: "Album" | "EP" | "Single" | "Mixtape";
+  coverImage: string;
+  story: string;
+  tracks: Track[];
+  featuredVideoId?: string;
+  featuredVideoLabel?: string;
+}
+
+// ── Art types ──
+export type ImageLayout = "full" | "duo" | "trio" | "asymmetric-left" | "asymmetric-right";
+
+export interface ArtImage {
   src: string;
-  /** Year created */
-  year?: string;
-  /** Medium used */
-  medium?: string;
-  /** Detailed description for the detail page */
-  longDescription?: string;
-  /** Process description */
-  process?: string;
-  /** Dimensions */
-  dimensions?: string;
+  caption?: string;
+  alt: string;
+}
+
+export type ArtContentBlock =
+  | { type: "text"; heading?: string; body: string }
+  | { type: "images"; layout: ImageLayout; images: ArtImage[] }
+  | { type: "video"; youtubeId: string; caption?: string };
+
+export interface ArtProject {
+  id: string;
+  title: string;
+  year: string;
+  medium: string;
+  category: string;
+  tagline: string;
+  coverImage: string;
+  sections: ArtContentBlock[];
 }
 
 // ── Content blocks for programming post body ──
