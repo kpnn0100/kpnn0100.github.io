@@ -5,6 +5,7 @@ import { Music } from "./components/Music";
 import { Art } from "./components/Art";
 import { ArtDetail } from "./components/ArtDetail";
 import { Programming } from "./components/Programming";
+import { ProgrammingDetail } from "./components/ProgrammingDetail";
 import { NotFound } from "./components/NotFound";
 
 // Using HashRouter for GitHub Pages compatibility (no server-side routing needed)
@@ -18,6 +19,7 @@ export const router = createHashRouter([
       { path: "art", Component: Art },
       { path: "art/:id", Component: ArtDetail },
       { path: "programming", Component: Programming },
+      { path: "programming/:id", Component: ProgrammingDetail },
       { path: "*", Component: NotFound },
     ],
   },

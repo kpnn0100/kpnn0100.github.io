@@ -38,8 +38,24 @@ export interface ArtItem {
   dimensions?: string;
 }
 
+// ── Content blocks for programming post body ──
+export type ContentBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "figure"; src: string; alt: string; caption: string; figNum: number }
+  | { type: "code"; language: string; code: string; caption?: string }
+  | { type: "list"; items: string[] };
+
+export interface Section {
+  /** Section number, e.g. "1", "2", "2.1" */
+  num: string;
+  /** Section heading */
+  heading: string;
+  /** Content blocks within this section */
+  content: ContentBlock[];
+}
+
 export interface ProgrammingItem {
-  /** Unique ID */
+  /** Unique ID (also used in the URL: /programming/{id}) */
   id: string;
   /** Project title */
   title: string;
@@ -49,10 +65,12 @@ export interface ProgrammingItem {
   year: string;
   /** Category/conference */
   conference: string;
-  /** Project description */
+  /** Short abstract shown in list & detail header */
   abstract: string;
   /** Technology tags */
   tags: string[];
-  /** Link to project */
+  /** Link to external repo */
   link: string;
+  /** Full paper-style sections (optional — detail page uses these) */
+  sections?: Section[];
 }
