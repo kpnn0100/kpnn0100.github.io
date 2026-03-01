@@ -45,7 +45,7 @@ export function Root() {
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
               <Link to="/" className="hover:opacity-80 transition-opacity">
-                <img src="/logo.png" alt="kpnn" className="h-8" />
+                <img src="/logo.svg" alt="kpnn" className="h-8" />
               </Link>
             </motion.div>
 

@@ -108,7 +108,7 @@ export function Home() {
             className="mb-8 relative"
           >
             <motion.img
-              src="/logo.png"
+              src="/logo.svg"
               alt="kpnn"
               className="h-24 md:h-32"
               animate={{ opacity: [1, 0.7, 1] }}
@@ -116,7 +116,7 @@ export function Home() {
             />
             {/* Glow effect */}
             <motion.img
-              src="/logo.png"
+              src="/logo.svg"
               alt=""
               className="absolute inset-0 h-24 md:h-32 blur-xl opacity-20 select-none"
               animate={{ opacity: [0.1, 0.25, 0.1] }}
