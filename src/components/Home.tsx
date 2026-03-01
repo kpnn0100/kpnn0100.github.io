@@ -103,27 +103,27 @@ export function Home() {
           className="flex flex-col items-center"
         >
           {/* Logo */}
-          <motion.h1
+          <motion.div
             variants={fadeUpVariants}
-            className="text-6xl md:text-8xl mb-8 tracking-wider relative"
+            className="mb-8 relative"
           >
-            <motion.span
-              className="inline-block"
+            <motion.img
+              src="/logo.png"
+              alt="kpnn"
+              className="h-24 md:h-32"
               animate={{ opacity: [1, 0.7, 1] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            >
-              kpnn
-            </motion.span>
+            />
             {/* Glow effect */}
-            <motion.span
-              className="absolute inset-0 text-white blur-xl opacity-20 select-none"
+            <motion.img
+              src="/logo.png"
+              alt=""
+              className="absolute inset-0 h-24 md:h-32 blur-xl opacity-20 select-none"
               animate={{ opacity: [0.1, 0.25, 0.1] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               aria-hidden="true"
-            >
-              kpnn
-            </motion.span>
-          </motion.h1>
+            />
+          </motion.div>
 
           {/* Name */}
           <motion.h2

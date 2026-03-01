@@ -44,8 +44,8 @@ export function Root() {
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
             >
-              <Link to="/" className="text-2xl tracking-wider hover:opacity-80 transition-opacity">
-                kpnn
+              <Link to="/" className="hover:opacity-80 transition-opacity">
+                <img src="/logo.png" alt="kpnn" className="h-8" />
               </Link>
             </motion.div>
 
